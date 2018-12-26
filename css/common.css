@@ -33,6 +33,7 @@ a:hover {
 
 img {
    border:0;
+   max-width: 550;
 }
 
 h1,h2,h3,h4,h5,h6 {

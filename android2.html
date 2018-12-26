@@ -8,20 +8,16 @@
 <meta name="description" content="" />
 <meta name="keywords" content="" />
 <link rel="stylesheet" href="css/common.css" type="text/css" />
-<title>IkeLog-android()</title>
+<title>SurfaceViewをつかってみる-androidで簡単なRPGを作ってみる</title>
 </head>
 <body>
 <div id="top">
    <div id="header">
-     <h1><a href="index.html">IkeLog</a>_<a href="android1.html">android()</a></h1>
+     <h1><a href="index.html">IkeLog</a>_<a href="android1.html">android</a>(2)</h1>
    </div><!-- /#header -->
-   <div id="subtitle">
-     <h2>Android Studioを使ってみる</h2>
-     <iframe style="display: none;" src="http://192.168.56.101/php/hello.html"></iframe>
-     </div>
    <div id="menu">
       <ul>
-
+      
         <!--//タブを作る
       <li><a href="index.html">MENU1</a></li>
       <li><a href="index.html">MENU2</a></li>
@@ -32,18 +28,85 @@
       </ul>
    </div><!-- /#menu -->
    <div id="contents">
+     <div id="subtitle">
+       <h3>新しいプロジェクトを作る。<br/>SurfaceViewをつかってみる。</h3>
+     </div>
       <div id="main">
-         <h2>Android Studioの使い方</h2>
+         <h2>SurfaceViewとは</h2>
          <p>
-           <br/><br/><br/><br/></p>
-         <h2>_</h2>
-         <p><br/><ul>
+           <br/>
+           まず、SurfaceViewとは何なのかという事なのですが、簡単にいうと、高速描画するためのクラスです。
+           <br/><br/>
+          とはいえ、いきなり高速描画とか言われても何と比較して高速なのか、また、どのくらいの速さなのかという疑問がうかんできますが、あくまで目的は簡単なRPGを作ってみると言うことなのでそれらについては触れません。(気になる方は調べてみてください！)
+           <br/><br/>
+           とりあえず、今回はAndroid Studioで新規プロジェクトを作って、SurfaceViewで何かしら描画するってところまでやっていきたいとおもいます！
+           <br/><br/>
+           (画像多めでいきます。)
+           <br/></p>
+         <h2>新規プロジェクトの作成</h2>
+         <p><br/>
+           <!--<ul>
              <li></li>
              <li></li>
              <li></li>
              <li></li>
              <li></li>
-           </ul><br/><br/><br/>
+           </ul>-->
+           何はともあれ新しいプロジェクトを作ってみます。
+           <br/><br/>
+           まず、AndroidStudioを起動して"Start a new Android Studio project"をクリックします。
+           <br/><br/>
+           もし、もう既に何かしらのプロジェクトを作っている方は"File"→"New"→"New project..."をクリックしてください。
+           <br/><br/>
+           <a href="https://lh3.googleusercontent.com/esKqh3YvV92Ge6CTaM_7iip1QfOer_KtqqGTJkJSA3xH9gB2cm7XgJDOhVQM2_nucsJDoP9epdlSDGQ8ouVmXzZ4ZIOEyJ6d0bbBc9JTbYDOSLD9uud9Y-1Q5Q_0yHYu0HYTRuWL=w1538-h960-no"><img src="https://lh3.googleusercontent.com/esKqh3YvV92Ge6CTaM_7iip1QfOer_KtqqGTJkJSA3xH9gB2cm7XgJDOhVQM2_nucsJDoP9epdlSDGQ8ouVmXzZ4ZIOEyJ6d0bbBc9JTbYDOSLD9uud9Y-1Q5Q_0yHYu0HYTRuWL=d"/></a>
+           <br/><br/>
+           次に、作成するAndroid アプリの名前とかを決めます。
+           <br/><br/>
+           Application nameは作成するアプリの名前で、Company domainは作成者を識別する感じのものです。
+           <br/><br/>
+           Project locationは今から作成するプロジェクトをどこに置くかを決めるものです。
+           <br/><br/>
+           今回は名前を"TestApplication1"とし、Company domainを"example.example.com"(エラーさえ出なければ何でも良いです。)とします。
+           <br/><br/>
+           また、今回はJavaのみを使用するので"Include C++ support"と"Include Kotolin support"にチェックをしません。 
+           <br/><br/>
+           そこまでいったら、"Next"をクリックし、次に進みます。
+           <br/><br/>
+           <a href="https://lh3.googleusercontent.com/WmEJjxUMmLGWI1kI4-hmhWr7fLp54kUUNK1ytPD3u6OOC24S8yngLmVX1kkJN43bPtUXBc4MDRS8D6WGuru67IGW3ETOS9dGueTJnMEnKNXUTSr9qqlMDqAGzSUur5QXMqCKyBfLnw=w1804-h1212-no"><img src="https://lh3.googleusercontent.com/WmEJjxUMmLGWI1kI4-hmhWr7fLp54kUUNK1ytPD3u6OOC24S8yngLmVX1kkJN43bPtUXBc4MDRS8D6WGuru67IGW3ETOS9dGueTJnMEnKNXUTSr9qqlMDqAGzSUur5QXMqCKyBfLnw=d"></a>
+           <br/><br/>
+           ここでは対応させる最低限のAPIレベルを決めます。
+           <br/><br/>
+           簡単にいうと、どのくらい古いAndroidまでこれから作るアプリを対応させるかというものです。
+           <br/><br/>
+           2018年12月現在、"Ice Cream Sandwich"というコード名のAndroidが公式のサポートから外れるということなので、その次の"Jelly Bean"(API 16)を最低限のAPIレベルとします。
+           <br/><br/>
+           選択したら、"Next"をクリックし次に進みます。
+           <br/><br/>
+           <a href="https://lh3.googleusercontent.com/a8NA20CHdvuFmA_CYZJbIUBeiTUwJRtucGR0-srNW7o8C9JRRW0peH9Rv1Et8yINnQivHjA0vmQTme6GDaa6KyjMIE_0Wy08_8H8U3GIQV-1aOcpSdpTbDQnBYB_d7pZvy_5uIReWA=w1804-h1212-no"><img src="https://lh3.googleusercontent.com/a8NA20CHdvuFmA_CYZJbIUBeiTUwJRtucGR0-srNW7o8C9JRRW0peH9Rv1Et8yINnQivHjA0vmQTme6GDaa6KyjMIE_0Wy08_8H8U3GIQV-1aOcpSdpTbDQnBYB_d7pZvy_5uIReWA=d"></a>
+           <br/><br/>
+           <br/><br/>
+           <br/><br/>
+           <br/><br/>
+           <br/><br/>
+           <br/><br/>
+           <br/><br/>
+           <br/><br/>
+           <br/><br/>
+           <br/><br/>
+           <br/><br/>
+           <br/><br/>
+           <br/><br/>
+           <br/><br/>
+           <br/><br/>
+           <br/><br/>
+           <br/><br/>
+           <br/><br/>
+           <br/><br/>
+           <br/><br/>
+           <br/><br/>
+           <br/><br/>
+           <br/><br/>
+           <br/><br/>
            <h3>_</h3>
            <br/><br/><br/><br/>
            <h3>_</h3>
@@ -81,8 +144,8 @@
          <div class="section">
             <h2>Android</h2>
             <ul>
-
-              <!--
+           
+              <!--  
             <li><a href="index.html">MENU1</a></li>
             <li><a href="index.html">MENU2</a></li>
             <li><a href="index.html">MENU3</a></li>
@@ -91,7 +154,7 @@
             <li><a href="index.html">MENU6</a></li> -->
             </ul>
          </div><!-- /.section -->
-         <!--
+         <!-- 
          <div class="section">
             <h2>趣味のこと</h2>
             <ul>
@@ -100,7 +163,7 @@
             <li><a href="index.html">MENU3</a></li>
             <li><a href="index.html">MENU4</a></li>
             <li><a href="index.html">MENU5</a></li>
-            <li><a href="index.html">MENU6</a></li>
+            <li><a href="index.html">MENU6</a></li> 
             </ul>
          </div>
         -->
