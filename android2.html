@@ -8,7 +8,7 @@
 <meta name="description" content="" />
 <meta name="keywords" content="" />
 <link rel="stylesheet" href="css/common.css" type="text/css" />
-<title>SurfaceViewをつかってみる-androidで簡単なRPGを作ってみる</title>
+<title>新しいプロジェクトを作る-androidで簡単なRPGを作ってみる</title>
 </head>
 <body>
 <div id="top">
@@ -29,20 +29,9 @@
    </div><!-- /#menu -->
    <div id="contents">
      <div id="subtitle">
-       <h3>新しいプロジェクトを作る。<br/>SurfaceViewをつかってみる。</h3>
+       <h3>新しいプロジェクトを作る。</h3>
      </div>
       <div id="main">
-         <h2>SurfaceViewとは</h2>
-         <p>
-           <br/>
-           まず、SurfaceViewとは何なのかという事なのですが、簡単にいうと、高速描画するためのクラスです。
-           <br/><br/>
-          とはいえ、いきなり高速描画とか言われても何と比較して高速なのか、また、どのくらいの速さなのかという疑問がうかんできますが、あくまで目的は簡単なRPGを作ってみると言うことなのでそれらについては触れません。(気になる方は調べてみてください！)
-           <br/><br/>
-           とりあえず、今回はAndroid Studioで新規プロジェクトを作って、SurfaceViewで何かしら描画するってところまでやっていきたいとおもいます！
-           <br/><br/>
-           (画像多めでいきます。)
-           <br/></p>
          <h2>新規プロジェクトの作成</h2>
          <p><br/>
            <!--<ul>
@@ -106,64 +95,110 @@
            <br/><br/>
            <a href="https://lh3.googleusercontent.com/HvVwUNN1uOV0yAC67_9mhs4Tyi0PMSUgxEJpTym4dQzRKkxq2_boFbrNygyoA1HyzqcvvScfTgYp26P3CmOswq-HzwjaITXRqRzVig6Znj56GM3fo4l8R5vFCgpBsQAfOt-yIU0KMA=w1769-h1189-no"><img src="https://lh3.googleusercontent.com/HvVwUNN1uOV0yAC67_9mhs4Tyi0PMSUgxEJpTym4dQzRKkxq2_boFbrNygyoA1HyzqcvvScfTgYp26P3CmOswq-HzwjaITXRqRzVig6Znj56GM3fo4l8R5vFCgpBsQAfOt-yIU0KMA=d"></a>
            <br/><br/>
+           プロジェクトが作成されると以下のような画面が現れます。
            <br/><br/>
+           上部に、activity_main.xmlと、MainActivity.javaというのがタブになっているのが分かると思いますが、ここで編集したいファイルを選択することが出来ます。
            <br/><br/>
+           そして、現在選択されている(明るく見えるタブ)"MainActivity.java"というのが、先ほど名前を決めたActivityのソースコードです。
            <br/><br/>
+           基本的にはその下の部分を編集したりします。
            <br/><br/>
+           <a href="https://lh3.googleusercontent.com/GxoSO6tb9oCUIQmcQOfmMLXwSkTDEklcrVWZsJgdguZn-jSQp4ixg1OuozM6DsWe0-bvC21tQ4Esqn-Uw5hZ1IgMpNJwKZsVpDVZbpJrkiK3otu5lybvmEfnLvFZkj8l2iZxhI_a9g=w1644-h976-no"><img src="https://lh3.googleusercontent.com/GxoSO6tb9oCUIQmcQOfmMLXwSkTDEklcrVWZsJgdguZn-jSQp4ixg1OuozM6DsWe0-bvC21tQ4Esqn-Uw5hZ1IgMpNJwKZsVpDVZbpJrkiK3otu5lybvmEfnLvFZkj8l2iZxhI_a9g=d"></a>
            <br/><br/>
+           ちなみに、"activity_main.xml"のタブを選択すると、以下のような画面が出てきます。
            <br/><br/>
+           もしかしたら、xml形式の表示がされているかもしれないですが、そのときは下の方にある"Design"っていうのを押してください。そうすればこんな感じの画面になります。
            <br/><br/>
+           とはいえ、今回xmlを使わないのでこの画面はあまり関係ないです。
            <br/><br/>
+           <a href="https://lh3.googleusercontent.com/8xyCT7DM1SBySlm66Kkz6CikG_o2JoFidrXJl8KjRE8qjZU2otskU8BFva5IVwb8tEbq7oeRtKCeUpdGqe3SmwX6_ACTLUX_iTjAqXwDZ0Y-4BM-TxUV37PymigiPwvjQgKtpDvyOw=w1644-h976-no"><img src="https://lh3.googleusercontent.com/8xyCT7DM1SBySlm66Kkz6CikG_o2JoFidrXJl8KjRE8qjZU2otskU8BFva5IVwb8tEbq7oeRtKCeUpdGqe3SmwX6_ACTLUX_iTjAqXwDZ0Y-4BM-TxUV37PymigiPwvjQgKtpDvyOw=d"></a>
            <br/><br/>
+           次に、Androidのエミュレータの設定をします。
            <br/><br/>
+           Androidのエミュレータは、これから作るアプリをパソコン上の仮想的な端末で実行するためのものです。
            <br/><br/>
+           上の図の青で囲まれた部分をクリックすると以下のような画面が出てエミュレータの起動or作成が出来ます。
            <br/><br/>
+           今回は下の赤線で引かれた"Create Virtual Device"をクリックして新しいエミュレータを作成します。
            <br/><br/>
+           <a href="https://lh3.googleusercontent.com/JQi6PAasP-7WdfiW8qjyDSG95JDGlSlnx4vjzwro9MOvepNmc7UIWAi1-eDeYPp3wLMCtpXpi3d3KIumfDVmwFMhaDJh4Y-MkSvgwGTtSe_3RImTfB6IvZeJQF5dz8jWw4eHUAh6WA=w883-h443-no"><img src="https://lh3.googleusercontent.com/JQi6PAasP-7WdfiW8qjyDSG95JDGlSlnx4vjzwro9MOvepNmc7UIWAi1-eDeYPp3wLMCtpXpi3d3KIumfDVmwFMhaDJh4Y-MkSvgwGTtSe_3RImTfB6IvZeJQF5dz8jWw4eHUAh6WA=d"></a>
            <br/><br/>
+           すると、以下のような画面になります。
            <br/><br/>
+           ここでは"Pixel 2"を選択します。
            <br/><br/>
+           選択したら、"Next"をクリックします。
            <br/><br/>
+           <a href="https://lh3.googleusercontent.com/JTCwlNp50YjDxVyn_AdWE-cHoBTgTQsof-YYkygygAcwG97nx_PNyOyA7aprsCPR0ddrgbtrq-Clv5g5yRp0883N2pKbOmwKOSuXGGI43T8NmT5ihXucaAF6MNdwDYQ6lIAey9toDQ=w732-h443-no"><img src="https://lh3.googleusercontent.com/JTCwlNp50YjDxVyn_AdWE-cHoBTgTQsof-YYkygygAcwG97nx_PNyOyA7aprsCPR0ddrgbtrq-Clv5g5yRp0883N2pKbOmwKOSuXGGI43T8NmT5ihXucaAF6MNdwDYQ6lIAey9toDQ=d"></a>
            <br/><br/>
+           ここでは、API28を選択します。もしかしたら、Release NameがAPI 28 ではなくて"Pi"になってるかもしれませんがそれはそれで大丈夫です。
            <br/><br/>
+           また、青字で"Download"と書かれている場合は、クリックしてダウンロードしてください。(通新環境にもよりますが結構時間がかかるかもしれません。)
            <br/><br/>
-           <h3>_</h3>
-           <br/><br/><br/><br/>
-           <h3>_</h3>
-           <br/><br/><br/><br/><br/><br/><br/><br/><br/>
-           <h3>_</h3>
-           <br/><br/><br/><br/><br/><br/>
-           <h3>_</h3>
-           <br/><br/><br/><br/><br/><br/>
-           <h3>_</h3>
-           <br/><br/><br/><br/><br/><br/><br/><br/>
-         </p>
-         <h2>_</h2>
-        <p>
-          <ol>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-          </ol>
-          <br/><br/><br/><br/><br/>
-        </p>
-         <h2>_</h2>
-        <p><br/><br/><br/>
+           選択したら、"Next"をクリックして次に進みます。
+           <br/><br/>
+           <a href="https://lh3.googleusercontent.com/7ffl-SQ4fEQ1mHR-Jz2gQb844qqP1K8WnPWmxmHi1EyS2gjx8RUU1o8MAKNDOlK70CHtG3J8XuRthTVhiCeSAegmtkxaBtxaqCKz2cA9dTKmStEz5eYKCJAko8W-5F166LLlPo_Odg=w732-h443-no"><img src="https://lh3.googleusercontent.com/7ffl-SQ4fEQ1mHR-Jz2gQb844qqP1K8WnPWmxmHi1EyS2gjx8RUU1o8MAKNDOlK70CHtG3J8XuRthTVhiCeSAegmtkxaBtxaqCKz2cA9dTKmStEz5eYKCJAko8W-5F166LLlPo_Odg=d"></a>
+           <br/><br/>
+           ここでは何も変えずに"Next"をクリックして次に進みます。
+           <br/><br/>
+           <a href="https://lh3.googleusercontent.com/nyI_t_2Lej-Mj55jS8nNLTLght33z9HjeF7yKCL1_Hy7MAV7tzgmVBPnKd8qB7MUQ54opx5dvMy2vo7iL9Fb3zrV74NJqZo1WFPx6kN97kTS02xy2HOq6YzW3hrZDMvsVTpK_5K03w=w2004-h1212-no"><img src="https://lh3.googleusercontent.com/nyI_t_2Lej-Mj55jS8nNLTLght33z9HjeF7yKCL1_Hy7MAV7tzgmVBPnKd8qB7MUQ54opx5dvMy2vo7iL9Fb3zrV74NJqZo1WFPx6kN97kTS02xy2HOq6YzW3hrZDMvsVTpK_5K03w=d"></a>
+           <br/><br/>
+           すると、先ほど作成した"Pixel 2 API 28"というのが追加されていると思います。
+           <br/><br/>
+           そこで、右の方にある三角形(再生ボタンみたいなやつ)を押すとエミュレータが起動できます。
+           <br/><br/>
+           <a href="https://lh3.googleusercontent.com/YKoY_DC-APCYgTwalyEa6m4v88s2hNl3kVXq32gK2sNVIg52LiomRL6bv40cBFcT8dcF-9fRVxbOicp8wfOIM7_5Wy5SgZdO8qPW0Rm-03lJhkBt38eXio36gvejXYliIouzxzt58A=w2342-h1175-no"><img src="https://lh3.googleusercontent.com/YKoY_DC-APCYgTwalyEa6m4v88s2hNl3kVXq32gK2sNVIg52LiomRL6bv40cBFcT8dcF-9fRVxbOicp8wfOIM7_5Wy5SgZdO8qPW0Rm-03lJhkBt38eXio36gvejXYliIouzxzt58A=d"></a>
+           <br/><br/>
+           起動したエミュレータはこんな感じです。
+           <br/><br/>
+           このエミュレータで作成したアプリケーションのテストを行なっていきます。
+           <br/><br/>
+           <a href="https://lh3.googleusercontent.com/JxQgnqljXtItT43L7j3OUmdqU6FjUd9so82yxxzlaPF2owcvhCd-hRKsd5QiVGVu2RJbww4lZVvwxuE6emKZU48UzBCPefaNYDgu9xixQOP8UfTzjcytEUuYq6P2eBTY3jqsgxhNBg=w511-h1071-no"><img src="https://lh3.googleusercontent.com/JxQgnqljXtItT43L7j3OUmdqU6FjUd9so82yxxzlaPF2owcvhCd-hRKsd5QiVGVu2RJbww4lZVvwxuE6emKZU48UzBCPefaNYDgu9xixQOP8UfTzjcytEUuYq6P2eBTY3jqsgxhNBg=d"></a>
+           <br/><br/>
+           エミュレータを起動した状態で、下の図の緑色の三角形をクリックすると、
+           <br/><br/>
+           <a href="https://lh3.googleusercontent.com/vGL5n2smt6h6kHpsM5EYc6_V3BsBbj-HF95AV4w1hgXJO5H1RCBDYPjcCp0bP47yWDGL1V5SpsRZOe0xi5FvUGg10jUV6hHHcHAoQVICgBy6FzMovWbAgZUxQT_L1b1FLyoPYV4Yow=w1644-h976-no"><img src="https://lh3.googleusercontent.com/vGL5n2smt6h6kHpsM5EYc6_V3BsBbj-HF95AV4w1hgXJO5H1RCBDYPjcCp0bP47yWDGL1V5SpsRZOe0xi5FvUGg10jUV6hHHcHAoQVICgBy6FzMovWbAgZUxQT_L1b1FLyoPYV4Yow=d"></a>
+           <br/><br/>
+           "Select Deployment Target"という画面が出ます。
+           <br/><br/>
+           この画面の"Connected Devices"という欄に現在起動しているエミュレータが表示されます。(実機を接続している場合はそれもここに表示されます。)
+           <br/><br/>
+           これをクリックすることで実行できるのでクリックします。
+           <br/><br/>
+           また、この画面の"Available Virtual Devices"という欄にあるエミュレータをクリックすることで、起動と実行を同時に行えます。
+           <br/><br/>
+           <a href="https://lh3.googleusercontent.com/w60qY0mdRXI6HtzHUDsifk66qEDiTe-iNIU4XOTBLeMyOI0jVUoX7Vn2hJCA2Pbm7fbR3UntsD_oXD2o4ET5hug9lKJ7Uy_lBUbtmCFKmMb7acmnHjvX3qpYI2zyVMSGWUIlPm3wGA=w865-h540-no"><img src="https://lh3.googleusercontent.com/w60qY0mdRXI6HtzHUDsifk66qEDiTe-iNIU4XOTBLeMyOI0jVUoX7Vn2hJCA2Pbm7fbR3UntsD_oXD2o4ET5hug9lKJ7Uy_lBUbtmCFKmMb7acmnHjvX3qpYI2zyVMSGWUIlPm3wGA=d"></a>
+           <br/><br/>
+           以下が実行されたアプリケーションです。
+           <br/><br/>
+           もしかしたら表示がちょっと違うかもしれませんが、"Hello world!"っていう文字が出ていると思います。
+           <br/><br/>
+           これはAndroidのプロジェクトを作成したときにも最初から入っていたもので、"activity_main.xml"に書かれています。
+           <br/><br/>
+           (気になる方は少しいじってみるのもいいと思います。)
+           <br/><br/>
+           <a href="https://lh3.googleusercontent.com/C7bZ7VBB23d8MAlG-FB2Kqb72-4VQzUcDqAzBhZryrT2Zi9sYvJID1llb_r0fp1zf0xvrdNKdG-SUfVKOBDt3TrslnnZCHSzaENQCZp_P9SgPez2zJSM3FXCDSvrDtN0O_XSV2TEgg=w511-h1072-no"><img src="https://lh3.googleusercontent.com/C7bZ7VBB23d8MAlG-FB2Kqb72-4VQzUcDqAzBhZryrT2Zi9sYvJID1llb_r0fp1zf0xvrdNKdG-SUfVKOBDt3TrslnnZCHSzaENQCZp_P9SgPez2zJSM3FXCDSvrDtN0O_XSV2TEgg=d"></a>
+           <br/><br/>
+           ちょっと長くなってしまったので今回はここまでとします。
+           <br/><br/>
+           本当はこのまま続けて"Surface View"を使うって所まで行こうと思ったのですが、この段階で結構な量になってしまったので、ここで一旦切ります。
+           <br/><br/>
+           ここまで読んでいただきありがとうございました。
+           <br/><br/>
+           頑張ってください！
         </p>
         <br/>
         <h6>作成日</h6>
-        <p>//</p>
-        <br/>
+        <p>2018/12/28</p>
+        <br/><!--
         <h6>更新日</h6>
-        <p>//</p>
+        <p>//</p>-->
       </div><!-- /#main -->
       <div id="sub">
          <div class="section">
             <h2>Android</h2>
             <ul>
-           
+              <li><a href="android1.html">導入</a></li>
               <!--  
             <li><a href="index.html">MENU1</a></li>
             <li><a href="index.html">MENU2</a></li>
