@@ -13,7 +13,7 @@
 <body>
 <div id="top">
    <div id="header">
-     <h1><a href="index.html">IkeLog</a>_<a href="">android</a>()</h1>
+     <h1><a href="index.html">IkeLog</a>_<a href="">android</a>(3)</h1>
    </div><!-- /#header -->
    <div id="menu">
       <ul>
@@ -41,24 +41,195 @@
            <br/><br/>
            とりあえず、今回はSurfaceViewで何かしら描画するってところをやっていきたいとおもいます！
            <br/></p>
-         <h2>_</h2>
-         <p><br/><ul>
+         <h2>SurfaceViewを使う</h2>
+         <p>
+           <!--<ul>
              <li></li>
              <li></li>
              <li></li>
              <li></li>
              <li></li>
-           </ul><br/><br/><br/>
-           <h3>_</h3>
-           <br/><br/><br/><br/>
-           <h3>_</h3>
-           <br/><br/><br/><br/><br/><br/><br/><br/><br/>
-           <h3>_</h3>
-           <br/><br/><br/><br/><br/><br/>
-           <h3>_</h3>
-           <br/><br/><br/><br/><br/><br/>
-           <h3>_</h3>
-           <br/><br/><br/><br/><br/><br/><br/><br/>
+           </ul>-->
+           <br/><br/>
+           では、Javaのクラスを新しく作っていきます。
+           <br/><br/>
+           もし、下の図で赤線で囲まれた部分が"Android"となっている場合は、そこをクリックして"Project"として置いてください。
+           <br/><br/>
+           そしたら、"com.example.example.testapplication1"って所を右クリック→"New"→"Java Class"とクリックしていってください。
+           <br/><br/>
+           <a href="https://lh3.googleusercontent.com/9MTjVFHwTphLxijHz4kXL6h9mcuTR-Y7TUhh6JobH0suYnQXEX5wCGTJ_m-qkyeGzXN0Wjw55InpS5DFuww39605q8xyVu_rtbSJg-oC0es1m0rz8lbsn1vtdVco9XV9rFxAU7IHRA=w2300-h1222-no"><img src="https://lh3.googleusercontent.com/9MTjVFHwTphLxijHz4kXL6h9mcuTR-Y7TUhh6JobH0suYnQXEX5wCGTJ_m-qkyeGzXN0Wjw55InpS5DFuww39605q8xyVu_rtbSJg-oC0es1m0rz8lbsn1vtdVco9XV9rFxAU7IHRA=d"></a>
+           <br/><br/>
+           ここでは、クラス名を"BackGroundView"とします。
+           <br/><br/>
+           "Superclass"の欄には継承するクラスを書き、"Interface(s)"の欄には実装する抽象クラスを書いてください。
+           <br/><br/>
+           "Package"の欄には最初に設定したCompany Domainにプロジェクト名をつけた"com.example.example.testapplication"を指定します。
+           <br/><br/>
+           そしたら、"OK"を押します。
+           <br/><br/>
+           <a href="https://lh3.googleusercontent.com/FGuXTrUJqpKWlDu4qeZhEKOjLsN7Iq65x2eJBZkVXTA5chAeUN03SS_TTqdWI7GvLfNbIqyKjEiK2Vb2WhVuNounMDxXsjcVp-O61DkjymhxLJ7wXVcw9shaiMNzkd8OhmKyNRpNkw=w1038-h818-no"><img src="https://lh3.googleusercontent.com/FGuXTrUJqpKWlDu4qeZhEKOjLsN7Iq65x2eJBZkVXTA5chAeUN03SS_TTqdWI7GvLfNbIqyKjEiK2Vb2WhVuNounMDxXsjcVp-O61DkjymhxLJ7wXVcw9shaiMNzkd8OhmKyNRpNkw=d"></a>
+           <br/><br/>
+           下のような画面が出てきた場合は"SurfaceView(context:Context)"を選択してください。
+           <br/><br/>
+           <a href="https://lh3.googleusercontent.com/ooMU7Lp0UMO_1B0-5Q1XjHqNr5qQDuaLOw35rl9WsepRNqdw8Thh0xsBtv1hMDJgjpr8xoLpwbs6fGxi0Qat1aDtF9vSgkjzj7PHumhM18JlJD6DBs3OkKS_Ox8TfXH_5mk1BXaMPw=w728-h1131-no"><img src="https://lh3.googleusercontent.com/ooMU7Lp0UMO_1B0-5Q1XjHqNr5qQDuaLOw35rl9WsepRNqdw8Thh0xsBtv1hMDJgjpr8xoLpwbs6fGxi0Qat1aDtF9vSgkjzj7PHumhM18JlJD6DBs3OkKS_Ox8TfXH_5mk1BXaMPw=d"></a>
+           <br/><br/>
+           すると、"BackGroundView.java"が生成されるのですが、エラー(赤い波線)が出ているのが分かります。
+           <br/><br/>
+           エラーの所でAlt+Enterを押すと、
+           <br/><br/>
+           <a href="https://lh3.googleusercontent.com/UM_qPnYIkPLf0ucLRM3sh4Va6-8h4gfTUVgJST_6F_MfBytGVcgIDjfGVyFUMlpp1MPRPC203lOunbb6_w_N1vcbAHhnxYo_Zo3gl05uptfUK0gcV5CBFbmBfZr1THVwqsZQzIhw1w=w2300-h1222-no"><img src="https://lh3.googleusercontent.com/UM_qPnYIkPLf0ucLRM3sh4Va6-8h4gfTUVgJST_6F_MfBytGVcgIDjfGVyFUMlpp1MPRPC203lOunbb6_w_N1vcbAHhnxYo_Zo3gl05uptfUK0gcV5CBFbmBfZr1THVwqsZQzIhw1w=d"></a>
+           <br/><br/>
+           こんな感じになります。
+           <br/><br/>
+           そこで、"Implement methods"を押してもらうと、
+           <br/><br/>
+           <a href="https://lh3.googleusercontent.com/Kirm0yDFa7PwLdxrwP2WPuKqajprtqjhQFEODGDiVrBad4EaRxTHmKhIOzGBWofyhxe6NBdiubZolTNKUKBlcE3eWc3I4Ifd9nOCWvIVUbc65PcJTVr3qgN6J-fvHZDB290U-6z08g=w834-h443-no"><img src="https://lh3.googleusercontent.com/Kirm0yDFa7PwLdxrwP2WPuKqajprtqjhQFEODGDiVrBad4EaRxTHmKhIOzGBWofyhxe6NBdiubZolTNKUKBlcE3eWc3I4Ifd9nOCWvIVUbc65PcJTVr3qgN6J-fvHZDB290U-6z08g=d"></a>
+           <br/><br/>
+           実装するメソッドの選択が出来ます。
+           <br/><br/>
+           下の図と同じような画面であればそのまま"OK"を押してください。
+           <br/><br/>
+           <a href="https://lh3.googleusercontent.com/MxbodGrP5O_ll15I2saABpIovR8eFhn1wWSejN8C_7w8V3RDf1xtD9NyUc8YpqzXk5QisCTSsE69Wc-Ud7rrJl18lWFvoYwUwnkHEFIlteIOZmu6tJzAfyhNSEqM5m4Bm4cWyCNEpw=w728-h1131-no"><img src="https://lh3.googleusercontent.com/MxbodGrP5O_ll15I2saABpIovR8eFhn1wWSejN8C_7w8V3RDf1xtD9NyUc8YpqzXk5QisCTSsE69Wc-Ud7rrJl18lWFvoYwUwnkHEFIlteIOZmu6tJzAfyhNSEqM5m4Bm4cWyCNEpw=d"></a>
+           <br/><br/>
+           すると、メソッドが3つオーバーライドされ、エラーが消えます。
+           <br/><br/>
+           <a href="https://lh3.googleusercontent.com/2FOnaFo_ZvwQFFfORalXGyLJW8YBQfnv19_vDBTPatDPKcnSytks5-K_Ev0awORkD_cWvS8Dcb6ccyVuF39icwH-h7qg3Diho69C56sJrUKLuszhMACWVz819Y-A2Yf347hdRz5lQg=w834-h443-no"><img src="https://lh3.googleusercontent.com/2FOnaFo_ZvwQFFfORalXGyLJW8YBQfnv19_vDBTPatDPKcnSytks5-K_Ev0awORkD_cWvS8Dcb6ccyVuF39icwH-h7qg3Diho69C56sJrUKLuszhMACWVz819Y-A2Yf347hdRz5lQg=d"></a>
+           <br/><br/>
+           これはこれで置いておいて、
+           <br/><br/>
+           つぎは、背景の画像の設定をやります。
+           <br/><br/>
+           まず、画像を入れるフォルダをプロジェクト内に用意します。
+           <br/><br/>
+           左側のProjectペイン内の"res"と書いてあるところを右クリック→"New"→"Directory"と押していってください。
+           <br/><br/>
+           <a href="https://lh3.googleusercontent.com/hjSareswEDpDDdA2f2t66eHeBq-6hW4fLDZvy_FWnVi36pEB_DwUCl9StLsgroHqurRUe-F--LLULWPUQguyf7zwV4x4z1TV1-yWcR1B9QuMwo0AwDHHqhucbE_aJgKjQ-lipbVFtg=w2300-h1222-no"><img src="https://lh3.googleusercontent.com/hjSareswEDpDDdA2f2t66eHeBq-6hW4fLDZvy_FWnVi36pEB_DwUCl9StLsgroHqurRUe-F--LLULWPUQguyf7zwV4x4z1TV1-yWcR1B9QuMwo0AwDHHqhucbE_aJgKjQ-lipbVFtg=d"></a>
+           <br/><br/>
+           "New Directory"という画面がでたら、"drawable-xxhdpi"と打ってください。
+           <br/><br/>
+           drawableは描画するためのリソースを入れておくもので、xxhdpiは解像度の度合いです。
+           <br/><br/>
+           <a href="https://lh3.googleusercontent.com/4VzZQgQdKzMYEX0Wym5_pjnRSSdv4K5W9H7x_QcexWxGRnpa4vwPecNWODWsBuVMXij36FWD1_C336vGKxd3gNTimJ3BhK8J35LQrtgWJWtHXv6CQbhgBN9br3lv1gruiuQmR5_aNA=w725-h225-no"><img src="https://lh3.googleusercontent.com/4VzZQgQdKzMYEX0Wym5_pjnRSSdv4K5W9H7x_QcexWxGRnpa4vwPecNWODWsBuVMXij36FWD1_C336vGKxd3gNTimJ3BhK8J35LQrtgWJWtHXv6CQbhgBN9br3lv1gruiuQmR5_aNA=d"></a>
+           <br/><br/>
+           今回はテスト用なので背景画像は何でも良いのですが、今回は以下のものを使います。
+           <br/><br/>
+           自分で何か用意できるのであればそちらをご使用ください。
+           <br/><br/>
+           (どこかで見たことあるような建物ですが、出来れば気にしないでください。あと、自分で描いたやつなので自己責任で自由に使ってください。)
+           <br/><br/>
+           <a href="https://lh3.googleusercontent.com/FnTIK-MkcSvp0B9FhZrpCdQHu5xPDhjTI5ZQjP2eMX1srY011LVrBWF7XzWcWgpE6r88PJ5MopLkJGIaFt9Flmk33fjoaGWKFr7pfISm30NOpQ6z0vAegoHzl1bV2PW1lCWViCaVWQ=w540-h960-no"><img src="https://lh3.googleusercontent.com/FnTIK-MkcSvp0B9FhZrpCdQHu5xPDhjTI5ZQjP2eMX1srY011LVrBWF7XzWcWgpE6r88PJ5MopLkJGIaFt9Flmk33fjoaGWKFr7pfISm30NOpQ6z0vAegoHzl1bV2PW1lCWViCaVWQ=d"></a>
+           <br/><br/>
+           では画像を、先ほど作った"drawable-xxhdpi"にいれておいてください。
+           <br/><br/>
+           あとでつかいます。
+           <br/><br/>
+           <br/><br/>
+           "BackGroundView.java"に戻ります。
+           <br/><br/>
+           今回作成したコードはこんな感じです。
+           <code>
+             <pre>package com.example.example.testapplication1;//ここは自分の環境に合わせてください。
+
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.RectF;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
+
+import java.util.concurrent.atomic.AtomicBoolean;
+
+public class BackGroundView extends SurfaceView implements SurfaceHolder.Callback {
+
+    private static final int DRAW_INTERVAL = 1;
+
+    public BackGroundView(Context context) {
+        super(context);
+        getHolder().addCallback(this);
+    }
+
+    private DrawThread drawThread;
+    private class DrawThread extends Thread{
+        private final AtomicBoolean isFinished = new AtomicBoolean();
+
+        public void finish(){
+            isFinished.set(true);
+        }
+        @Override
+        public void run(){
+            SurfaceHolder holder = getHolder();
+            while(!isFinished.get()){
+                if(holder.isCreating()){
+                    continue;
+                }
+                Canvas canvas = holder.lockCanvas();
+                if(canvas == null){
+                    continue;
+                }
+                drawBackGround(canvas);
+                holder.unlockCanvasAndPost(canvas);
+                synchronized (this){
+                    try {
+                        wait(DRAW_INTERVAL);
+                    }catch (InterruptedException e){
+                    }
+                }
+            }
+        }
+    }
+
+    public void startDrawThread(){
+        stopDrawThread();
+
+        drawThread = new DrawThread();
+        drawThread.start();
+    }
+    public boolean stopDrawThread(){
+        if(drawThread == null){
+            return false;
+        }
+        drawThread.finish();
+        drawThread = null;
+        return true;
+    }
+
+    @Override
+    public void surfaceCreated(SurfaceHolder holder) {
+        startDrawThread();
+    }
+
+    @Override
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+    }
+
+    @Override
+    public void surfaceDestroyed(SurfaceHolder holder) {
+        stopDrawThread();
+    }
+
+    public void drawBackGround(Canvas canvas){
+        Paint paint = new Paint();
+        Bitmap bg = BitmapFactory.decodeResource(getResources(),R.drawable.pupupuland3);
+        RectF dstRect = new RectF(0,0,canvas.getWidth(),canvas.getHeight());
+        Rect srcRect = new Rect(0,0,bg.getWidth(),bg.getHeight());
+        canvas.drawBitmap(bg,srcRect,dstRect,paint);
+
+    }
+}</pre>
+           </code>
+           コンストラクタのgetHolder.addCallback(this);の所ではSurfaceHolderのコールバック先を自分自身としています。
+           <br/><br/>
+           次に、"Thread"を継承した"DrawThread"クラスを作り、
+           <br/><br/>
+           <br/><br/>
+           <br/><br/>
+           <br/><br/>
+           <br/><br/>
+           <br/>
          </p>
          <h2>_</h2>
         <p>
