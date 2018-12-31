@@ -8,8 +8,15 @@
 <meta name="description" content="" />
 <meta name="keywords" content="" />
 <link rel="stylesheet" href="css/common.css" type="text/css" />
+  
+  <!--<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?skin=doxy"></script>
+  <style type="text/css">
+    code.prettyprint {
+      word-wrap: normal;
+      list-style-type: decimal;
+    }
+  </style>-->
 <title>SurfaceViewをつかってみる-androidで簡単なRPGを作ってみる</title>
-<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?desert"></script>
 </head>
 <body>
 <div id="top">
@@ -128,8 +135,9 @@
            "BackGroundView.java"に戻ります。
            <br/><br/>
            今回作成したコードはこんな感じです。
-           <code>
-             <pre class="prettyprint">package com.example.example.testapplication1;//ここは自分の環境に合わせてください。
+           <div>
+             <code>
+             <pre class="prettyprint linenums">package com.example.example.testapplication1;//ここは自分の環境に合わせてください。
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -222,19 +230,20 @@ public class BackGroundView extends SurfaceView implements SurfaceHolder.Callbac
     }
 }</pre>
            </code>
+           </div>
            コンストラクタのgetHolder.addCallback(this);の所ではSurfaceHolderのコールバック先を自分自身としています。
            <br/><br/>
-           次に、"Thread"を継承した"DrawThread"クラス(後程このクラスの中身を見ていきます)を作り、startDrawThread()とstopDrawThread()でDrawThreadのインスタンスをstart,stopさせる動作を作り、最初に実装した"surfaceCreated()"で"drawThread"をスタートさせ、"surfaceDestroyed()"で"drawThread"を終了させています。
+           次に、"Thread"を継承した"DrawThread"クラス(後程このクラスの中身を見ていきます)を作り、startDrawThread()とstopDrawThread()でDrawThreadのインスタンスをstart,stopさせる動作を作り、最初に実装した"surfaceCreated()"で"drawThread"をスタートさせ、"surfaceDestroyed()"で"drawThread"を終了させています。
            <br/><br/>
            今回は"surfaceChanged()"では何もさせません。
            <br/><br/>
-           そして、最後の方にある"drawBackGround(Canvas canvas)"では新しい"Paint"のインスタンスを作り、
+           そして、最後の方にある"drawBackGround(Canvas canvas)"では新しい"Paint"のインスタンスを作り、
            <br/><br/>
            先ほど"drawable-xxhdpi"フォルダにしまった画像を"Bitmap型"に(drawableのフォルダにあるリソースを呼び出すときはR.drawable.リソース名と指定します。)し、canvasにdrawしています。
            <br/><br/>
            ここで、"Rect"という型が出てきましたが、これは四角形を意味しており、第一引数にleft,第二引数にtop,第三引数にright,第四引数にbottomをint型で指定します。
            <br/><br/>
-           "RectF"は"Rect"の引数を"Float型"にしたやつです。
+           "RectF"は"Rect"の引数を"Float型"にしたやつです。
            <br/><br/>
            <br/><br/>
            さて、DrawThreadの中身なのですが、最初に"AromicBoolean"という型を初期化しています。
@@ -316,5 +325,10 @@ public class BackGroundView extends SurfaceView implements SurfaceHolder.Callbac
       <div class="copyright">Copyright &copy; 2018 IkeLog All Rights Reserved.</div>
    </div><!-- /#footer -->
 </div><!-- /#top -->
+  <script type="text/javascript" src="js/lang-css.js"></script>
+  <script type="text/javascript" src="js/prettify.js"></script>
+  <script>
+  prettyprint();
+  </script>
 </body>
 </html>
