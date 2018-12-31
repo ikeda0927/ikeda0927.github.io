@@ -233,67 +233,54 @@ public class BackGroundView extends SurfaceView implements SurfaceHolder.Callbac
            </div>
            コンストラクタのgetHolder.addCallback(this);の所ではSurfaceHolderのコールバック先を自分自身としています。
            <br/><br/>
-           次に、"Thread"を継承した"DrawThread"クラス(後程このクラスの中身を見ていきます)を作り、startDrawThread()とstopDrawThread()でDrawThreadのインスタンスをstart,stopさせる動作を作り、最初に実装した"surfaceCreated()"で"drawThread"をスタートさせ、"surfaceDestroyed()"で"drawThread"を終了させています。
+           次に、"Thread"を継承した"DrawThread"クラス(後程このクラスの中身を見ていきます)を作り、startDrawThread()とstopDrawThread()でDrawThreadのインスタンスをstart,stopさせる動作を作り、最初に実装した"surfaceCreated()"で"drawThread"をスタートさせ、"surfaceDestroyed()"で"drawThread"を終了させています。
            <br/><br/>
-           今回は"surfaceChanged()"では何もさせません。
+           今回は"surfaceChanged()"では何もさせません。
            <br/><br/>
-           そして、最後の方にある"drawBackGround(Canvas canvas)"では新しい"Paint"のインスタンスを作り、
+           そして、最後の方にある"drawBackGround(Canvas canvas)"では新しい"Paint"のインスタンスを作り、
            <br/><br/>
-           先ほど"drawable-xxhdpi"フォルダにしまった画像を"Bitmap型"に(drawableのフォルダにあるリソースを呼び出すときはR.drawable.リソース名と指定します。)し、canvasにdrawしています。
+           先ほど"drawable-xxhdpi"フォルダにしまった画像を"Bitmap型"に(drawableのフォルダにあるリソースを呼び出すときはR.drawable.リソース名と指定します。)し、canvasにdrawしています。
            <br/><br/>
            ここで、"Rect"という型が出てきましたが、これは四角形を意味しており、第一引数にleft,第二引数にtop,第三引数にright,第四引数にbottomをint型で指定します。
            <br/><br/>
-           "RectF"は"Rect"の引数を"Float型"にしたやつです。
+           "RectF"は"Rect"の引数を"Float型"にしたやつです。
            <br/><br/>
            <br/><br/>
            さて、DrawThreadの中身なのですが、最初に"AromicBoolean"という型を初期化しています。
            <br/><br/>
            "AtomicBoolean"とは何かという事になるのですが、これは、
            <br/><br/>
-           複数のスレッドがあるようなプログラムでも安全に使えるBoolean型で、引数に何も指定しない場合は"false"が初期値として設定されます。
+           複数のスレッドがあるようなプログラムでも安全に使えるBoolean型で、引数に何も指定しない場合は"false"が初期値として設定されます。
            <br/><br/>
            何故普通のboolean型じゃダメなのかが気になった人は、プログラムの排他制御とか、競合とかで調べてみてください。
            <br/><br/>
            <br/><br/>
-           DrawThread内のfinish()メソッドではAtomicBooleanのインスタンスにtrueをセットしています。
+           DrawThread内のfinish()メソッドではAtomicBooleanのインスタンスにtrueをセットしています。
            <br/><br/>
            <br/><br/>
            次にオーバーライドしているrun()メソッドの中を見ていきます。
            <br/><br/>
            SurfaceHolder型の"holder"に自身のSurfaceHolderをセットし、"isFinished"の中身が"true"になるまで、
            <br/><br/>
-           "holder"が生成されているかの確認、"Surface"への描画の開始(同時に"Surface"が生成されているかの確認)、"holder.lockCanvas"で返ってきた"canvas"を引数として背景を描画、"Surface"の表示、"DRAW_INTERVAL"で指定した時間(ms)だけwaitさせるというのを繰り返します。
+           "holder"が生成されているかの確認、"Surface"への描画の開始(同時に"Surface"が生成されているかの確認)、"holder.lockCanvas"で返ってきた"canvas"を引数として背景を描画、"Surface"の表示、"DRAW_INTERVAL"で指定した時間(ms)だけwaitさせるというのを繰り返します。
            <br/><br/>
            <br/><br/>
            <br/>
          </p>
-         <h2>_</h2>
-        <p>
-          <ol>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-          </ol>
-          <br/><br/><br/><br/><br/>
-        </p>
-         <h2>_</h2>
-        <p><br/><br/><br/>
-        </p>
         <br/>
         <h6>作成日</h6>
-        <p>//</p>
+        <p>2018/12/31</p>
         <br/>
+        <!--
         <h6>更新日</h6>
-        <p>//</p>
+        <p>//</p>-->
       </div><!-- /#main -->
       <div id="sub">
          <div class="section">
             <h2>Android</h2>
             <ul>
-
+              <li><a href="android1.html">1:導入</a></li>
+              <li><a href="android2.html">2:新しいプロジェクトを作る</a></li>
               <!--
             <li><a href="index.html">MENU1</a></li>
             <li><a href="index.html">MENU2</a></li>
