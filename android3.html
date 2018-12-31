@@ -39,8 +39,16 @@
      <div id="subtitle">
      <h3>SurfaceViewをつかってみる。</h3>
      </div>
+     <div>
+       <ol>
+         <li><a href="#heading1">SurfaceViewとは</a></li>
+         <li><a href="#heading2">SurfaceViewを使う</a></li>
+         <li><a href="#heading3">コードの説明</a></li>
+         <li><a href="#heading4">最後に</a></li>
+       </ol>
+     </div>
       <div id="main">
-         <h2>SurfaceViewとは</h2>
+         <h2 id="heading1">SurfaceViewとは</h2>
          <p>
            <br/>
            まず、SurfaceViewとは何なのかという事なのですが、簡単にいうと、高速描画するためのクラスです。
@@ -49,7 +57,7 @@
            <br/><br/>
            とりあえず、今回はSurfaceViewで何かしら描画するってところをやっていきたいとおもいます！
            <br/></p>
-         <h2>SurfaceViewを使う</h2>
+         <h2 id="heading2">SurfaceViewを使う</h2>
          <p>
            <!--<ul>
              <li></li>
@@ -231,22 +239,25 @@ public class BackGroundView extends SurfaceView implements SurfaceHolder.Callbac
 }</pre>
            </code>
            </div>
-           コンストラクタのgetHolder.addCallback(this);の所ではSurfaceHolderのコールバック先を自分自身としています。
+           <h2 id="heading3">コードの説明</h2>
+           <h4>ここからコードの説明をしますが、正直言って必ず理解しなければいけないと言うわけではないと思うので、飛ばしてしまって構いません。</h4>
+           <br/><br/>
+           22行目、コンストラクタのgetHolder.addCallback(this);の所ではSurfaceHolderのコールバック先を自分自身としています。
            <br/><br/>
            次に、"Thread"を継承した"DrawThread"クラス(後程このクラスの中身を見ていきます)を作り、startDrawThread()とstopDrawThread()でDrawThreadのインスタンスをstart,stopさせる動作を作り、最初に実装した"surfaceCreated()"で"drawThread"をスタートさせ、"surfaceDestroyed()"で"drawThread"を終了させています。
            <br/><br/>
-           今回は"surfaceChanged()"では何もさせません。
+           今回は76行目の"surfaceChanged()"では何もさせません。
            <br/><br/>
-           そして、最後の方にある"drawBackGround(Canvas canvas)"では新しい"Paint"のインスタンスを作り、
+           そして、84行目にある"drawBackGround(Canvas canvas)"では新しい"Paint"のインスタンスを作り、
            <br/><br/>
            先ほど"drawable-xxhdpi"フォルダにしまった画像を"Bitmap型"に(drawableのフォルダにあるリソースを呼び出すときはR.drawable.リソース名と指定します。)し、canvasにdrawしています。
            <br/><br/>
-           ここで、"Rect"という型が出てきましたが、これは四角形を意味しており、第一引数にleft,第二引数にtop,第三引数にright,第四引数にbottomをint型で指定します。
+           88行目で、"Rect"という型が出てきましたが、これは四角形を意味しており、第一引数にleft,第二引数にtop,第三引数にright,第四引数にbottomをint型で指定します。
            <br/><br/>
-           "RectF"は"Rect"の引数を"Float型"にしたやつです。
+           87行目の"RectF"は"Rect"の引数を"Float型"にしたやつです。
            <br/><br/>
            <br/><br/>
-           さて、DrawThreadの中身なのですが、最初に"AromicBoolean"という型を初期化しています。
+           さて、DrawThreadの中身なのですが、最初に"AromicBoolean"という型を初期化しています。(27行目)
            <br/><br/>
            "AtomicBoolean"とは何かという事になるのですが、これは、
            <br/><br/>
@@ -255,17 +266,31 @@ public class BackGroundView extends SurfaceView implements SurfaceHolder.Callbac
            何故普通のboolean型じゃダメなのかが気になった人は、プログラムの排他制御とか、競合とかで調べてみてください。
            <br/><br/>
            <br/><br/>
-           DrawThread内のfinish()メソッドではAtomicBooleanのインスタンスにtrueをセットしています。
+           29行目のDrawThread内のfinish()メソッドではAtomicBooleanのインスタンスにtrueをセットしています。
            <br/><br/>
            <br/><br/>
-           次にオーバーライドしているrun()メソッドの中を見ていきます。
+           次に33行目でオーバーライドしているrun()メソッドの中を見ていきます。
            <br/><br/>
            SurfaceHolder型の"holder"に自身のSurfaceHolderをセットし、"isFinished"の中身が"true"になるまで、
            <br/><br/>
-           "holder"が生成されているかの確認、"Surface"への描画の開始(同時に"Surface"が生成されているかの確認)、"holder.lockCanvas"で返ってきた"canvas"を引数として背景を描画、"Surface"の表示、"DRAW_INTERVAL"で指定した時間(ms)だけwaitさせるというのを繰り返します。
+           36~38行目で"holder"が生成されているかの確認、39行目で"Surface"への描画の開始(40~42行目で"Surface"が生成されているかの確認)、43行目で"holder.lockCanvas"で返ってきた"canvas"を引数として背景を描画、44行目で"Surface"の表示、45~50行目で"DRAW_INTERVAL"で指定した時間(ms)だけwaitさせるというのを繰り返します。
            <br/><br/>
+           "DRAW_INTERVAL"の値を大きくすると、描画間隔が増えます。
            <br/><br/>
-           <br/>
+           これでSurfaceViewのコードの説明を終わります。
+           <br/><br/>
+           <h2 id="heading4">最後に</h2>
+           <br/><br/>
+           こんかいは簡単なRPGを作るための最初のクラスとして、SurfaceViewを継承したクラスをつくりました。
+           <br/><br/>
+           例として、適当な画像を画面に表示させてみましたが、
+           <br/><br/>
+           <code><pre class="prettyprint">canvas.drawColor(Color.LTGRAY);</pre></code>
+           <br/><br/>
+           上の文を画像を表示するコードと入れ替えると、画面がLiteGrayで塗りつぶされます。
+           <br/><br/>
+           他にも、テキストを表示したり、四角形を表示したり出来るので色々調べて試してみてください。
+           <br/><br/>
          </p>
         <br/>
         <h6>作成日</h6>
@@ -281,13 +306,6 @@ public class BackGroundView extends SurfaceView implements SurfaceHolder.Callbac
             <ul>
               <li><a href="android1.html">1:導入</a></li>
               <li><a href="android2.html">2:新しいプロジェクトを作る</a></li>
-              <!--
-            <li><a href="index.html">MENU1</a></li>
-            <li><a href="index.html">MENU2</a></li>
-            <li><a href="index.html">MENU3</a></li>
-            <li><a href="index.html">MENU4</a></li>
-            <li><a href="index.html">MENU5</a></li>
-            <li><a href="index.html">MENU6</a></li> -->
             </ul>
          </div><!-- /.section -->
          <!--
