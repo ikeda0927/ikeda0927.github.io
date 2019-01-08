@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<meta http-equiv="imagetoolbar" content="no" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<link rel="stylesheet" href="css/common.css" type="text/css" />
+<title>キャラクターを表示する-androidで簡単なRPGを作ってみる</title>
+</head>
+<body>
+<div id="top">
+   <div id="header">
+     <h1><a href="index.html">IkeLog</a>_<a href="">android</a>(4)</h1>
+   </div><!-- /#header -->
+   <div id="menu">
+      <ul>
+      
+        <!--//タブを作る
+      <li><a href="index.html">MENU1</a></li>
+      <li><a href="index.html">MENU2</a></li>
+      <li><a href="index.html">MENU3</a></li>
+      <li><a href="index.html">MENU4</a></li>
+      <li><a href="index.html">MENU5</a></li>
+      <li><a href="index.html">MENU6</a></li>-->
+      </ul>
+   </div><!-- /#menu -->
+   <div id="contents">
+     <div id="subtitle">
+     <h3>キャラクターを表示する。</h3>
+     </div>
+     <div>
+       <ol>
+         <li><a href="#heading1">はじめに</a></li>
+         <li><a href="#heading2">キャラクターの種類について</a></li>
+         <li><a href="#heading3">今回つくるキャラクターの画像について</a></li>
+         <li><a href="#heading4">キャラクター用のクラスを作成</a></li>
+         <li><a href="#heading5">キャラクターの移動</a></li>
+         <li><a href="#heading6">最後に</a></li>
+       </ol>
+     </div>
+      <div id="main">
+         <h2 id="heading1">はじめに</h2>
+         <p>
+           <br/>
+           RPGに必要不可欠なものと言えば、キャラクターです。
+           <br/><br/>
+           自分は背景だけのRPGを見たことがありません。
+           <br/><br/>
+           なので、今回はキャラクターの表示(できたら移動まで)をやっていきたいと思います。
+           <br/></p>
+         <h2 id="heading2">キャラクターの種類について</h2>
+         <p>
+           <br/>
+           今から、キャラクター用のクラスを作っていくのですが、RPGに出てくるキャラクターは2種類あります。
+           <br/><br/>
+           一つ目はゲームのプレイヤーが操作をするキャラクターです。
+           <br/><br/>
+           例としては、主人公です。
+           <br/><br/>
+           二つ目はプログラムで操作するキャラクターです。
+           <br/><br/>
+           例としては、敵キャラです。(現段階では今回作るゲームには敵キャラは登場しませんが．．．)  
+         </p>
+         <h2 id="heading3">今回作るキャラクターの画像について</h2>
+         <p><br/>
+           以下にこれから使用する主人公の画像を載せるので使いたければ自由に使用してください。
+           <br/><br/>
+           <a href="https://lh3.googleusercontent.com/B43DHVgADvsvZNgiKDhrA2pvJVGxcx8fZskfxNixkA0fID-wUT_NevetgFlZQdsNBcF3v5Y84l-iXR_n10j1wGKNXfm1lfna0EcpTMsApqhtkGDI8d8T3TOHWe2EncTkRphU16jS4Q=s1024-no"><img src="https://lh3.googleusercontent.com/B43DHVgADvsvZNgiKDhrA2pvJVGxcx8fZskfxNixkA0fID-wUT_NevetgFlZQdsNBcF3v5Y84l-iXR_n10j1wGKNXfm1lfna0EcpTMsApqhtkGDI8d8T3TOHWe2EncTkRphU16jS4Q=d"></a>
+
+           <br/><br/>
+           ちなみに、この画像はキャラクターの所以外を透明にしているためpng形式で保存してください。(もし、透明で無くなってしまっている場合はGIMPかなにかで透明にしてください)
+           <br/><br/>
+           まず、この画像を見ると複数の主人公が組み合わさって一つの画像になっているのが分かります。
+           <br/><br/>
+           どうしてこうなっているのかというと、登場人物の体の向き毎に一つの画像にしてしまうと数がとても多くなってしまい面倒なことになってしまうのと、プログラムでもキャラクターを作成するクラスに渡す画像ファイルが1つにおさえられるという利点があるからです。
+           <br/><br/>
+           また、同じ向きのキャラクター(微妙に違っている)が二つずつありますが、交互に表示させることで画面に動きが出るからです。
+           <br/><br/>
+           上の主人公の画像では斜めを向いた場合も含んでいますが、斜め移動とかにしない場合は斜めの所をカットしても大丈夫です(カットした場合はこれから作るプログラムの所で向き毎に指定する画像を間違えないようにしてください。)
+           <br/><br/>
+           あと、ここでは斜めの画像は主人公でしか使いません
+           <br/><br/>
+           いちおう、画像の形式についての説明画像を載せます。
+           <br/><br/>
+           <a href="https://lh3.googleusercontent.com/70IZfPD7zAfWySq-eMRpFeQjGoitk-DwXE2uTzN_yoroLFoAfx33RWBm8RuUYM5nhELsJdWDb88TI-oJpXdK_7ZeEBnHpKXvuhl8VqsmdPOcNvx0Vv-ruL7ZsxdkcsbGdj81WddcJQ=s1024-no"><img src="https://lh3.googleusercontent.com/70IZfPD7zAfWySq-eMRpFeQjGoitk-DwXE2uTzN_yoroLFoAfx33RWBm8RuUYM5nhELsJdWDb88TI-oJpXdK_7ZeEBnHpKXvuhl8VqsmdPOcNvx0Vv-ruL7ZsxdkcsbGdj81WddcJQ=d"></a>
+         </p>
+         <h2 id="heading4">キャラクター用のクラスを作成</h2>
+         <p><br/>
+           それでは早速キャラクター用のクラスを作りたいのですが、2種類のキャラクター(プレイヤーが操作できるキャラクターと操作できないキャラクター)があり、その2種類を同じクラスには書きたくありません。
+           <br/><br/>
+           ですが、2種類のキャラクターには共通点があります。(同じ形式の画像を読み込んだり、画面に表示したり)
+           <br/><br/>
+           なので、キャラクターの共通部分を抽象クラスとしようと思います。
+           <br/><br/>
+           <br/><br/>
+           <br/><br/>
+           <br/><br/>
+           <br/><br/>
+           
+           <h3>_</h3>
+           <br/><br/><br/><br/><br/><br/>
+           <h3>_</h3>
+           <br/><br/><br/><br/><br/><br/>
+           <h3>_</h3>
+           <br/><br/><br/><br/><br/><br/><br/><br/>
+           <code>
+             <pre class="prettyprint linenums"></pre>
+           </code>
+         </p>
+         <h2>キャラクターの移動</h2>
+        <p>
+          <ol>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+          </ol>
+          <br/><br/><br/><br/><br/>
+        </p>
+         <h2>最後に</h2>
+        <p><br/><br/><br/>
+        </p>
+        <br/>
+        <h6>作成日</h6>
+        <p>//</p>
+        <br/>
+        <h6>更新日</h6>
+        <p>//</p>
+      </div><!-- /#main -->
+      <div id="sub">
+         <div class="section">
+            <h2>Android</h2>
+            <ul>
+              <li><a href="android1.html">1:導入</a></li>
+              <li><a href="android2.html">2:新しいプロジェクトを作る</a></li>
+              <li><a href="android3.html">3:SurfaceViewをつかってみる</a></li>
+              <li><a href="android4.html" style="color: #0000ff;">4:キャラクターを表示する</a></li>
+              <!--  
+            <li><a href="index.html">MENU1</a></li>
+            <li><a href="index.html">MENU2</a></li>
+            <li><a href="index.html">MENU3</a></li>
+            <li><a href="index.html">MENU4</a></li>
+            <li><a href="index.html">MENU5</a></li>
+            <li><a href="index.html">MENU6</a></li> -->
+            </ul>
+         </div><!-- /.section -->
+         <!-- 
+         <div class="section">
+            <h2>趣味のこと</h2>
+            <ul>
+            <li><a href="index.html">MENU1</a></li>
+            <li><a href="index.html">MENU2</a></li>
+            <li><a href="index.html">MENU3</a></li>
+            <li><a href="index.html">MENU4</a></li>
+            <li><a href="index.html">MENU5</a></li>
+            <li><a href="index.html">MENU6</a></li> 
+            </ul>
+         </div>
+        -->
+      </div><!-- /#sub -->
+   </div><!-- /#contents -->
+   <div id="pageTop">
+      <a href="#top">ページのトップへ戻る</a>
+   </div><!-- /#pageTop -->
+   <div id="footer">
+      <div class="copyright">Copyright &copy; 2018 IkeLog All Rights Reserved.</div>
+   </div><!-- /#footer -->
+</div><!-- /#top -->
+  <script type="text/javascript" src="js/prettify.js"></script>
+  <script type="text/javascript" src="js/lang-css.js"></script>
+  <script>
+  prettyPrint();
+  </script>
+</body>
+</html>
