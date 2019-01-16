@@ -18,7 +18,7 @@
    <div id="menu">
       <ul>
 
-        <!--//�^�u�����
+        <!--//タブを作る
       <li><a href="index.html">MENU1</a></li>
       <li><a href="index.html">MENU2</a></li>
       <li><a href="index.html">MENU3</a></li>
@@ -29,7 +29,7 @@
    </div><!-- /#menu -->
    <div id="contents">
      <div id="subtitle">
-       <h3>Unity�ŉ�]���i���ۂ��̍���Ă݂�<br/>(�쐻�� 2019�^1�^13)</h3>
+       <h3>Unityで回転寿司っぽいの作ってみた<br/>(作製中 2019／1／13)</h3>
      </div>
      <div>
        <!--<ol>
@@ -42,41 +42,41 @@
       <div id="main">
          <h2>Unity</h2>
          <p>
-           <a href="https://www.ikegon.tk/Sushi/">����</a>����������]���i�̃y�[�W�ɍs���܂��B(WebGL�g�p)
+           <a href="https://www.ikegon.tk/Sushi/">ここ</a>から作った回転寿司のページに行けます。(WebGL使用)
            <br/><br/>
-           "Space"�L�[��������ʍ����̒��F���ۂ���������i(�܂���)����������܂��B
+           "Space"キーを押す画面左側の茶色っぽい箱から寿司(まぐろ)が生成されます。
            <br/><br/>
-           �������ꂽ���i�̓x���g�R���x�A�[�ɂ̂��ė���Ă����܂��B
+           生成された寿司はベルトコンベアーにのって流れていきます。
            <br/><br/>
-          "1"����"5"�̃L�[�ɂ͂��ꂼ��J����(�Q�[�������f�B�X�v���C�ɉf���o��������������)������U���Ă��܂��B
+          "1"から"5"のキーにはそれぞれカメラ(ゲーム内をディスプレイに映し出す役割をもつもの)が割り振られています。
            <br/><br/>
-           "1"�L�[�̃J�����͏�����Ԃ̃J�����ł��B
+           "1"キーのカメラは初期状態のカメラです。
            <br/><br/>
-           "2"�L�[�̃J�����͍ŏ����瑶�݂��Ă�����i����납�猩�銴���ŉf���o���Ă��܂��B
+           "2"キーのカメラは最初から存在している寿司を後ろから見る感じで映し出しています。
            <br/><br/>
-           "3"�L�[�̃J�����͎��i�̉E������̎��_�ł��B
+           "3"キーのカメラは寿司の右側からの視点です。
            <br/><br/>
-           "4"�L�[�̃J�����͎��i�̍�������̎��_�ł��B
+           "4"キーのカメラは寿司の左側からの視点です。
            <br/><br/>
-           "5"�L�[�̃J�����͎��i�̑O����������鎋�_�ł��B
+           "5"キーのカメラは寿司の前から後ろを見る視点です。
            <br/><br/>
-           "c"�L�[�������Ƒ��x�������l�ɖ߂�܂��B
+           "c"キーを押すと速度が初期値に戻ります。
            <br/><br/>
-           "d"�L�[��������Destroy���[�h�ɓ���܂��B
+           "d"キーを押すとDestroyモードに入ります。
            <br/><br/>
-           Destroy���[�h���͔������Ȃ�܂��B
+           Destroyモード時は箱が青くなります。
            <br/><br/>
-           sample�摜
+           sample画像
            <br/><br/>
            <a href="https://lh3.googleusercontent.com/saiIwDF35RFNbh4fvJ98kEWRtpCvbEXGiGOKAbcpUukYdOvTD75BDrq8n9h8Lg5Fet4J0Uk18SsUTQRxPp8QSsW3mYTxlXPjIIytDweEuZn23DjaY6uCr2KF_RWy7FIqfwCo7CwMbQ=w2172-h1222-no"><img src="https://lh3.googleusercontent.com/saiIwDF35RFNbh4fvJ98kEWRtpCvbEXGiGOKAbcpUukYdOvTD75BDrq8n9h8Lg5Fet4J0Uk18SsUTQRxPp8QSsW3mYTxlXPjIIytDweEuZn23DjaY6uCr2KF_RWy7FIqfwCo7CwMbQ=d"></a>
            <br/>
            <a href="https://lh3.googleusercontent.com/cQkhjlkcjpy_iFBDfXG3LkZlmTSU3q4CpI8DGIgz6RYa5umGsGY_HOI2-j8ajv2OlOED7TMt6g8xBUS_kK2Jpd6tS-7JHXlwzUh4NEPZncrkASQWj1_df-QJBAGrYh2CpjcqtfGIVA=w2172-h1222-no"><img src="https://lh3.googleusercontent.com/cQkhjlkcjpy_iFBDfXG3LkZlmTSU3q4CpI8DGIgz6RYa5umGsGY_HOI2-j8ajv2OlOED7TMt6g8xBUS_kK2Jpd6tS-7JHXlwzUh4NEPZncrkASQWj1_df-QJBAGrYh2CpjcqtfGIVA=d"></a>
            <br/><br/>
-         �����Ȃ�ɂ���̖ʔ����ȂƎv���Ƃ���͂Ƃ����ƁA�����m�������@���ł͖����A�܂�Ŏ����ōl���čs�����Ă��邩�̂悤�ɐU�镑���Ă��鏊�ł��B 
+         自分なりにこれの面白いなと思うところはというと、箱同士が物理法則では無く、まるで自分で考えて行動しているかのように振る舞っている所です。 
            <br/><br/>
-           ���܂ł����Ă�����C�����܂��B
+           いつまでも見ていられる気がします。
            <br/><br/>
-           ����͎��i�Ɋւ���Unity�̍�i�ł��B
+           次回は寿司に関するUnityの作品です。
            <br/><br/>
            <!--  <br/><br/><br/></p>
          <h2>_</h2>
@@ -117,10 +117,10 @@
         <p><br/><br/><br/>-->
         </p>
         <br/>
-        <h6>�쐬��</h6>
+        <h6>作成日</h6>
         <p>//</p>
         <br/>
-        <h6>�X�V��</h6>
+        <h6>更新日</h6>
         <p>//</p>
       </div><!-- /#main -->
       <div id="sub">
@@ -140,7 +140,7 @@
          </div><!-- /.section -->
          <!--
          <div class="section">
-            <h2>��̂���</h2>
+            <h2>趣味のこと</h2>
             <ul>
             <li><a href="index.html">MENU1</a></li>
             <li><a href="index.html">MENU2</a></li>
@@ -154,7 +154,7 @@
       </div><!-- /#sub -->
    </div><!-- /#contents -->
    <div id="pageTop">
-      <a href="#top">�y�[�W�̃g�b�v�֖߂�</a>
+      <a href="#top">ページのトップへ戻る</a>
    </div><!-- /#pageTop -->
    <div id="footer">
       <div class="copyright">Copyright &copy; 2018 IkeLog All Rights Reserved.</div>
