@@ -8,7 +8,7 @@
 <meta name="description" content="" />
 <meta name="keywords" content="" />
 <link rel="stylesheet" href="css/common.css" type="text/css" />
-<title>�L�����N�^�[��\������-android�ŊȒP��RPG������Ă݂�</title>
+<title>キャラクターを表示する-androidで簡単なRPGを作ってみる</title>
 </head>
 <body>
 <div id="top">
@@ -18,7 +18,7 @@
    <div id="menu">
       <ul>
       
-        <!--//�^�u�����
+        <!--//タブを作る
       <li><a href="index.html">MENU1</a></li>
       <li><a href="index.html">MENU2</a></li>
       <li><a href="index.html">MENU3</a></li>
@@ -29,113 +29,113 @@
    </div><!-- /#menu -->
    <div id="contents">
      <div id="subtitle">
-     <h3>�L�����N�^�[��\������B</h3>
+     <h3>キャラクターを表示する。</h3>
      </div>
      <div>
        <ol>
-         <li><a href="#heading1">�͂��߂�</a></li>
-         <li><a href="#heading2">�L�����N�^�[�̎�ނɂ���</a></li>
-         <li><a href="#heading3">�������L�����N�^�[�̉摜�ɂ���</a></li>
-         <li><a href="#heading4">��ʂ𕪂���</a></li>
-         <li><a href="#heading5">�L�����N�^�[�p�̃N���X���쐬</a></li>
-         <li><a href="#heading6">�L�����N�^�[�̈ړ�</a></li>
-         <li><a href="#heading7">�Ō��</a></li>
+         <li><a href="#heading1">はじめに</a></li>
+         <li><a href="#heading2">キャラクターの種類について</a></li>
+         <li><a href="#heading3">今回つくるキャラクターの画像について</a></li>
+         <li><a href="#heading4">画面を分ける</a></li>
+         <li><a href="#heading5">キャラクター用のクラスを作成</a></li>
+         <li><a href="#heading6">キャラクターの移動</a></li>
+         <li><a href="#heading7">最後に</a></li>
        </ol>
      </div>
       <div id="main">
-         <h2 id="heading1">�͂��߂�</h2>
+         <h2 id="heading1">はじめに</h2>
          <p>
            <br/>
-           RPG�ɕK�v�s���Ȃ��̂ƌ����΁A�L�����N�^�[�ł��B
+           RPGに必要不可欠なものと言えば、キャラクターです。
            <br/><br/>
-           �����͔w�i������RPG���������Ƃ�����܂���B
+           自分は背景だけのRPGを見たことがありません。
            <br/><br/>
-           �Ȃ̂ŁA����̓L�����N�^�[�̕\��(�ł�����ړ��܂�)������Ă��������Ǝv���܂��B
+           なので、今回はキャラクターの表示(できたら移動まで)をやっていきたいと思います。
            <br/></p>
-         <h2 id="heading2">�L�����N�^�[�̎�ނɂ���</h2>
+         <h2 id="heading2">キャラクターの種類について</h2>
          <p>
            <br/>
-           ������A�L�����N�^�[�p�̃N���X������Ă����̂ł����ARPG�ɏo�Ă���L�����N�^�[��2��ނ���܂��B
+           今から、キャラクター用のクラスを作っていくのですが、RPGに出てくるキャラクターは2種類あります。
            <br/><br/>
-           ��ڂ̓Q�[���̃v���C���[�����������L�����N�^�[�ł��B
+           一つ目はゲームのプレイヤーが操作をするキャラクターです。
            <br/><br/>
-           ��Ƃ��ẮA��l���ł��B
+           例としては、主人公です。
            <br/><br/>
-           ��ڂ̓v���O�����ő��삷��L�����N�^�[�ł��B
+           二つ目はプログラムで操作するキャラクターです。
            <br/><br/>
-           ��Ƃ��ẮA�G�L�����ł��B(���i�K�ł͍�����Q�[���ɂ͓G�L�����͓o�ꂵ�܂��񂪁D�D�D)  
+           例としては、敵キャラです。(現段階では今回作るゲームには敵キャラは登場しませんが．．．)  
          </p>
-         <h2 id="heading3">������L�����N�^�[�̉摜�ɂ���</h2>
+         <h2 id="heading3">今回作るキャラクターの画像について</h2>
          <p><br/>
-           �ȉ��ɂ��ꂩ��g�p�����l���̉摜���ڂ���̂Ŏg��������Ύ��R�Ɏg�p���Ă��������B
+           以下にこれから使用する主人公の画像を載せるので使いたければ自由に使用してください。
            <br/><br/>
            <a href="https://lh3.googleusercontent.com/B43DHVgADvsvZNgiKDhrA2pvJVGxcx8fZskfxNixkA0fID-wUT_NevetgFlZQdsNBcF3v5Y84l-iXR_n10j1wGKNXfm1lfna0EcpTMsApqhtkGDI8d8T3TOHWe2EncTkRphU16jS4Q=s1024-no"><img src="https://lh3.googleusercontent.com/B43DHVgADvsvZNgiKDhrA2pvJVGxcx8fZskfxNixkA0fID-wUT_NevetgFlZQdsNBcF3v5Y84l-iXR_n10j1wGKNXfm1lfna0EcpTMsApqhtkGDI8d8T3TOHWe2EncTkRphU16jS4Q=d"></a>
 
            <br/><br/>
-           ���Ȃ݂ɁA���̉摜�̓L�����N�^�[�̏��ȊO�𓧖��ɂ��Ă��邽��png�`���ŕۑ����Ă��������B(�����A�����Ŗ����Ȃ��Ă��܂��Ă���ꍇ��GIMP���Ȃɂ��œ����ɂ��Ă�������)
+           ちなみに、この画像はキャラクターの所以外を透明にしているためpng形式で保存してください。(もし、透明で無くなってしまっている場合はGIMPかなにかで透明にしてください)
            <br/><br/>
-           �܂��A���̉摜������ƕ����̎�l�����g�ݍ��킳���Ĉ�̉摜�ɂȂ��Ă���̂�������܂��B
+           まず、この画像を見ると複数の主人公が組み合わさって一つの画像になっているのが分かります。
            <br/><br/>
-           �ǂ����Ă����Ȃ��Ă���̂��Ƃ����ƁA�o��l���̑̂̌������Ɉ�̉摜�ɂ��Ă��܂��Ɛ����ƂĂ������Ȃ��Ă��܂��ʓ|�Ȃ��ƂɂȂ��Ă��܂��̂ƁA�v���O�����ł��L�����N�^�[���쐬����N���X�ɓn���摜�t�@�C����1�ɂ���������Ƃ������_�����邩��ł��B
+           どうしてこうなっているのかというと、登場人物の体の向き毎に一つの画像にしてしまうと数がとても多くなってしまい面倒なことになってしまうのと、プログラムでもキャラクターを作成するクラスに渡す画像ファイルが1つにおさえられるという利点があるからです。
            <br/><br/>
-           �܂��A���������̃L�����N�^�[(�����Ɉ���Ă���)���������܂����A���݂ɕ\�������邱�Ƃŉ�ʂɓ������o�邩��ł��B
+           また、同じ向きのキャラクター(微妙に違っている)が二つずつありますが、交互に表示させることで画面に動きが出るからです。
            <br/><br/>
-           ��̎�l���̉摜�ł͎΂߂��������ꍇ���܂�ł��܂����A�΂߈ړ��Ƃ��ɂ��Ȃ��ꍇ�͎΂߂̏����J�b�g���Ă����v�ł�(�J�b�g�����ꍇ�͂��ꂩ����v���O�����̏��Ō������Ɏw�肷��摜���ԈႦ�Ȃ��悤�ɂ��Ă��������B)
+           上の主人公の画像では斜めを向いた場合も含んでいますが、斜め移動とかにしない場合は斜めの所をカットしても大丈夫です(カットした場合はこれから作るプログラムの所で向き毎に指定する画像を間違えないようにしてください。)
            <br/><br/>
-           ���ƁA�����ł͎΂߂̉摜�͎�l���ł����g���܂���
+           あと、ここでは斜めの画像は主人公でしか使いません
            <br/><br/>
-           ���������A�摜�̌`���ɂ��Ă̐����摜���ڂ��܂��B
+           いちおう、画像の形式についての説明画像を載せます。
            <br/><br/>
            <a href="https://lh3.googleusercontent.com/70IZfPD7zAfWySq-eMRpFeQjGoitk-DwXE2uTzN_yoroLFoAfx33RWBm8RuUYM5nhELsJdWDb88TI-oJpXdK_7ZeEBnHpKXvuhl8VqsmdPOcNvx0Vv-ruL7ZsxdkcsbGdj81WddcJQ=s1024-no"><img src="https://lh3.googleusercontent.com/70IZfPD7zAfWySq-eMRpFeQjGoitk-DwXE2uTzN_yoroLFoAfx33RWBm8RuUYM5nhELsJdWDb88TI-oJpXdK_7ZeEBnHpKXvuhl8VqsmdPOcNvx0Vv-ruL7ZsxdkcsbGdj81WddcJQ=d"></a>
          </p>
-         <h2 id="heading4">��ʂ𕪂���</h2>
+         <h2 id="heading4">画面を分ける</h2>
          <p><br/>
-           <!--����ł͑����L�����N�^�[�p�̃N���X����肽���̂ł����A2��ނ̃L�����N�^�[(�v���C���[������ł���L�����N�^�[�Ƒ���ł��Ȃ��L�����N�^�[)������A����2��ނ𓯂��N���X�ɂ͏�����������܂���B
+           <!--それでは早速キャラクター用のクラスを作りたいのですが、2種類のキャラクター(プレイヤーが操作できるキャラクターと操作できないキャラクター)があり、その2種類を同じクラスには書きたくありません。
            <br/><br/>
-           �ł����A2��ނ̃L�����N�^�[�ɂ͋��ʓ_������܂��B(�����`���̉摜��ǂݍ��񂾂�A��ʂɕ\��������)
+           ですが、2種類のキャラクターには共通点があります。(同じ形式の画像を読み込んだり、画面に表示したり)
            <br/><br/>
-           �Ȃ̂ŁA�L�����N�^�[�̋��ʕ����𒊏ۃN���X�Ƃ��悤�Ǝv���܂��B
+           なので、キャラクターの共通部分を抽象クラスとしようと思います。
            <br/><br/>-->
-           �抸�����͎�l���ł͂Ȃ��L�����N�^�[(�v���C���[�����삵�Ȃ��L�����N�^�[)��\������N���X������Ă݂����̂ł����A�L�����N�^�[��\�����邽�߂ɂ͕\������ꏊ���w�肷��K�v������܂��B
+           取敢えずは主人公ではないキャラクター(プレイヤーが操作しないキャラクター)を表示するクラスを作ってみたいのですが、キャラクターを表示するためには表示する場所を指定する必要があります。
            <br/><br/>
-           �Ȃ̂ŁA��ʂ����̐}�̂悤�ɕ����Ă݂����Ǝv���܂��B
+           なので、画面を下の図のように分けてみたいと思います。
            <br/><br/>
            <a href="https://lh3.googleusercontent.com/UNj04frqULW0oIOgZxryOIcHJka7VirmzUj27ZxcTPT5hKdQrJ3u5n_4KtttYIR2u2oVaYBFi3V3l9CPlCJc18PW6zwjxsRv5y8NOP08lApywUMwtF67bUeOr0-P5wy_N9sZ2FT9cg=w800-h1200-no"><img src="https://lh3.googleusercontent.com/UNj04frqULW0oIOgZxryOIcHJka7VirmzUj27ZxcTPT5hKdQrJ3u5n_4KtttYIR2u2oVaYBFi3V3l9CPlCJc18PW6zwjxsRv5y8NOP08lApywUMwtF67bUeOr0-P5wy_N9sZ2FT9cg=d"></a>
            <br/><br/>
-           �[���̉�ʂ��c��12�A����8�ɕ����Ă��܂��B(�����ɂ͓��ɈӖ��͂Ȃ��̂ł��D�݂łǂ���)
+           端末の画面を縦に12個、横に8個に分けています。(数字には特に意味はないのでお好みでどうぞ)
            <br/><br/>
-           �����ł́A��ʂ𕡐��̎l�p�`���\�����Ă���ƍl���āA���̎l�p�`�̏c�̑傫����H_unit�A���̑傫����W_unit�Ƃ��Ă��܂��B
+           ここでは、画面を複数の四角形が構成していると考えて、その四角形の縦の大きさをH_unit、横の大きさをW_unitとしています。
            <br/><br/>
-           H_unit,W_unit���������ňʒu������킹�܂��B
+           H_unit,W_unitいくつ分かで位置をあらわせます。
            <br/><br/>
-           ����ł͑O��̔w�i��\������N���X�ɂ�����ƕt�������āA���������Ǝv���܂��B
+           それでは前回の背景を表示するクラスにちょっと付け足して、分けたいと思います。
            <br/><br/>
-           �O��̃v���O�����Ɉȉ��̂悤�ɒǉ����Ă��������B
+           前回のプログラムに以下のように追加してください。
            <br/><br/>
            <code>
-             <pre class="prettyprint linenums">//�ȗ�
+             <pre class="prettyprint linenums">//省略
 public class BackGroundView extends SurfaceView implements SurfaceHolder.Callback {
 
     private static final int DRAW_INTERVAL = 1;
-    private static float W_unit = 0f;//�ǉ�
-    private static float H_unit = 0f;//�ǉ�
+    private static float W_unit = 0f;//追加
+    private static float H_unit = 0f;//追加
 
     public BackGroundView(Context context) {
         super(context);
         getHolder().addCallback(this);
     }
-    public staitc float getW_unit(){//�ǉ�(���̃N���X��W_unit�̒l���g���Ƃ��p)
+    public staitc float getW_unit(){//追加(他のクラスでW_unitの値を使うとき用)
         return W_unit;
     }
-    public static float getH_unit(){//�ǉ�(���̃N���X��H_unit�̒l���g���Ƃ��p)
+    public static float getH_unit(){//追加(他のクラスでH_unitの値を使うとき用)
         return H_unit;
     }
 
     private DrawThread drawThread;
-//�ȗ�</pre>
+//省略</pre>
            </code>
            <code>
-             <pre class="prettyprint linenums">�ȗ�
+             <pre class="prettyprint linenums">省略
     public void drawBackGround(Canvas canvas){
         canvas.drawColor(Color.LTGRAY);
 
@@ -144,27 +144,27 @@ public class BackGroundView extends SurfaceView implements SurfaceHolder.Callbac
         RectF dstRect = new RectF(0,0,canvas.getWidth(),canvas.getHeight());
         Rect srcRect = new Rect(0,0,bg.getWidth(),bg.getHeight());
         canvas.drawBitmap(bg,srcRect,dstRect,paint);
-        if(W_unit == 0f){//�ǉ�
-            W_unit = canvas.getWidth()/8;//����͉�ʂ̉���8�ɕ����邽�߁A8�Ŋ����Ă���
-            H_unit = canvas.getHeight()/12;//��ʂ��c��12�ɕ����邽��
+        if(W_unit == 0f){//追加
+            W_unit = canvas.getWidth()/8;//今回は画面の横を8つに分けるため、8で割っている
+            H_unit = canvas.getHeight()/12;//画面を縦に12個に分けるため
         }
 
     }
-�ȗ�</pre>
+省略</pre>
            </code>
            <br/><br/>
-           ����ŃL�����N�^�[�̈ʒu��ݒ肷�邱�Ƃ��o����悤�ɂȂ����̂ő����N���X������ăL�����N�^�[��\�����܂��傤�B
+           これでキャラクターの位置を設定することが出来るようになったので早速クラスを作ってキャラクターを表示しましょう。
            <br/><br/>
            </p>
-        <h2 id="heading5">�L�����N�^�[�p�̃N���X���쐬</h2>
+        <h2 id="heading5">キャラクター用のクラスを作成</h2>
         <p>
            <br/><br/>
-          �R�[�h�̐����̓R�[�h�̒��ɃR�����g�Ƃ��ď������̂ł����ǂ�ł��������B
+          コードの説明はコードの中にコメントとして書いたのでそれを読んでください。
            <br/><br/>
-          �F�X�������Ă݂�Ɨ������[�܂�Ǝv���܂��B
+          色々いじってみると理解が深まると思います。
            <br/><br/>
           <code>
-             <pre class="prettyprint linenums">package com.example.example.testapplication1;//�����͎����̊��ɍ��킹�Ă�������
+             <pre class="prettyprint linenums">package com.example.example.testapplication1;//ここは自分の環境に合わせてください
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -172,41 +172,41 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
-import static com.example.example.testapplication1.BackGroundView.getH_unit;//�����������̊��ɍ��킹�Ă�������
-import static com.example.example.testapplication1.BackGroundView.getW_unit;//�����������̊��ɍ��킹�Ă�������
+import static com.example.example.testapplication1.BackGroundView.getH_unit;//ここも自分の環境に合わせてください
+import static com.example.example.testapplication1.BackGroundView.getW_unit;//ここも自分の環境に合わせてください
 
 public class Character {
-    public static Canvas canvas;//�ȒP�ɂ����Ɖ�ʂ̂���
-    private Bitmap bmp;//�L�����N�^�[�̉摜
-    private int characterWidth;//���bmp�̉����ł͂Ȃ��L�����N�^�[�̉���
-    private int characterHeight;//���l��bmp�̏c���ł͂Ȃ��L�����N�^�[�̏c��
-    //�ȉ��̓L�����N�^�[��\������ۂ�bmp�̂Ȃ��̂ǂ��ɂǂ̌����̃L�����N�^�[�����邩��m�邽�߂̂���(public static �ɂȂ��Ă���̂͌�قǁc)
-    public static Rect rect_front1;//����
+    public static Canvas canvas;//簡単にいうと画面のこと
+    private Bitmap bmp;//キャラクターの画像
+    private int characterWidth;//上のbmpの横幅ではなくキャラクターの横幅
+    private int characterHeight;//同様にbmpの縦幅ではなくキャラクターの縦幅
+    //以下はキャラクターを表示する際にbmpのなかのどこにどの向きのキャラクターがいるかを知るためのもの(public static になっているのは後ほど…)
+    public static Rect rect_front1;//正面
     public static Rect rect_front2;
-    public static Rect rect_back1;//���
+    public static Rect rect_back1;//後ろ
     public static Rect rect_back2;
-    public static Rect rect_ldf1;//���΂ߑO
+    public static Rect rect_ldf1;//左斜め前
     public static Rect rect_ldf2;
-    public static Rect rect_rdf1;//�E�΂ߑO
+    public static Rect rect_rdf1;//右斜め前
     public static Rect rect_rdf2;
-    public static Rect rect_left1;//��
+    public static Rect rect_left1;//左
     public static Rect rect_left2;
-    public static Rect rect_right1;//�E
+    public static Rect rect_right1;//右
     public static Rect rect_right2;
-    public static Rect rect_ldb1;//���΂ߌ��
+    public static Rect rect_ldb1;//左斜め後ろ
     public static Rect rect_ldb2;
-    public static Rect rect_rdb1;//�E�΂ߌ��
+    public static Rect rect_rdb1;//右斜め後ろ
     public static Rect rect_rdb2;
 
-    private Rect srcRect;//canvas�ɕ\������ۂɎg���L�����N�^�[��bmp���ł̈ʒu(��Ŏ��������������Rect�̂���)
-    private RectF dstRect;//��ʂ̂ǂ̈ʒu�ɕ\�������邩
+    private Rect srcRect;//canvasに表示する際に使うキャラクターのbmp内での位置(上で示したたくさんのRectのこと)
+    private RectF dstRect;//画面のどの位置に表示させるか
 
     public Character(Canvas canvas, Bitmap bmp){
         this.canvas=canvas;
         this.bmp = bmp;
-        characterWidth= bmp.getWidth()/4;//�����characterWidth��bmp���̃L�����N�^�[�̉����𓾂�
-        characterHeight= bmp.getHeight()/4;//�����characterWidth��bmp���̃L�����N�^�[�̏c���𓾂�
-        //bmp���ɂ�����L�����N�^�[�̈ʒu���w�肷��
+        characterWidth= bmp.getWidth()/4;//これでcharacterWidthはbmp内のキャラクターの横幅を得た
+        characterHeight= bmp.getHeight()/4;//これでcharacterWidthはbmp内のキャラクターの縦幅を得た
+        //bmp内におけるキャラクターの位置を指定する
         rect_front1 = new Rect(0,0,characterWidth,characterHeight);
         rect_front2 = new Rect(characterWidth,0,characterWidth*2,characterHeight);
         rect_back1 = new Rect(characterWidth*2,0,characterWidth*3,characterHeight);
@@ -224,12 +224,12 @@ public class Character {
         rect_rdb1 = new Rect(characterWidth*2,characterHeight*3,characterWidth*3,characterHeight*4);
         rect_rdb2 = new Rect(characterWidth*3,characterHeight*3,characterWidth*4,characterHeight*4);
 
-        srcRect = rect_front1;//�����l�Ƃ��Ďw�肵�Ă����B���̃v���O�����ł͂�����ς���L�����N�^�[�̌������ς��B
-        dstRect = new RectF(getW_unit()*0,getH_unit()*0,getW_unit()*1,getH_unit()*1);//�����l�Ƃ��Ď抸��������ɕ\���B�����̕�����ς���ƈʒu���ς��B
+        srcRect = rect_front1;//初期値として指定しておく。このプログラムではここを変えるキャラクターの向きが変わる。
+        dstRect = new RectF(getW_unit()*0,getH_unit()*0,getW_unit()*1,getH_unit()*1);//初期値として取敢えず左上に表示。数字の部分を変えると位置が変わる。
     }
     public void show(){
         if(srcRect != null && dstRect != null){
-            canvas.drawBitmap(bmp,srcRect,dstRect,new Paint());//bmp��srcRect�ɂ����镔��������ʓ���dstRect�̈ʒu�ɕ\������
+            canvas.drawBitmap(bmp,srcRect,dstRect,new Paint());//bmpのsrcRectにあたる部分をを画面内のdstRectの位置に表示する
         }
     }
 
@@ -237,10 +237,10 @@ public class Character {
 </pre>
            </code>
            <br/><br/>
-          ���̃N���X�̃C���X�^���X���쐬���ĕ\������Ƃ���������BackgroundView�N���X��drawBackground���\�b�h���ɒǉ����܂��B
+          このクラスのインスタンスを作成して表示するという処理をBackgroundViewクラスのdrawBackgroundメソッド内に追加します。
            <br/><br/>
            <code>
-             <pre class="prettyprint linenums">�ȗ�
+             <pre class="prettyprint linenums">省略
     public void drawBackGround(Canvas canvas){
         canvas.drawColor(Color.LTGRAY);
 
@@ -253,19 +253,19 @@ public class Character {
             W_unit = canvas.getWidth()/8;
             H_unit = canvas.getHeight()/12;
         }
-        //�ǉ�
-        Bitmap characterBG = BitmapFactory.decodeResource(getResources(),R.drawable.mc);//drawable-xxhdpi�t�H���_����L�����N�^�[�̉摜��ǂݍ���
-        Character character = new Character(canvas,characterBG);//Character�N���X�̃C���X�^���X���쐬
-        character.show();//�\��
-        //�ǉ������܂�
+        //追加
+        Bitmap characterBG = BitmapFactory.decodeResource(getResources(),R.drawable.mc);//drawable-xxhdpiフォルダからキャラクターの画像を読み込む
+        Character character = new Character(canvas,characterBG);//Characterクラスのインスタンスを作成
+        character.show();//表示
+        //追加ここまで
 
     }
-�ȗ�</pre>
+省略</pre>
            </code>
            <br/><br/>
-          ���̏�ԂŎ��s����Ɖ�ʂ̍���ɃL�����N�^�[���\�������Ǝv���܂��B
+          この状態で実行すると画面の左上にキャラクターが表示されると思います。
            <br/><br/>
-          Character�N���X���̃L�����N�^�[�̈ʒu�����߂镔����ς���Έʒu��傫�����ς�����̂ŐF�X����Ă݂Ă��������B
+          Characterクラス内のキャラクターの位置を決める部分を変えれば位置や大きさも変えられるので色々やってみてください。
            <br/><br/>
            <br/><br/>
            <br/><br/>
@@ -284,7 +284,7 @@ public class Character {
              <pre class="prettyprint linenums"></pre>
            </code>
          </p>
-         <h2>�L�����N�^�[�̈ړ�</h2>
+         <h2>キャラクターの移動</h2>
         <p>
           <ol>
             <li></li>
@@ -296,24 +296,24 @@ public class Character {
           </ol>
           <br/><br/><br/><br/><br/>
         </p>
-         <h2>�Ō��</h2>
+         <h2>最後に</h2>
         <p><br/><br/><br/>
         </p>
         <br/>
-        <h6>�쐬��</h6>
+        <h6>作成日</h6>
         <p>//</p>
         <br/>
-        <h6>�X�V��</h6>
+        <h6>更新日</h6>
         <p>//</p>
       </div><!-- /#main -->
       <div id="sub">
          <div class="section">
             <h2>Android</h2>
             <ul>
-              <li><a href="android1.html">1:����</a></li>
-              <li><a href="android2.html">2:�V�����v���W�F�N�g�����</a></li>
-              <li><a href="android3.html">3:SurfaceView�������Ă݂�</a></li>
-              <li><a href="android4.html" style="color: #0000ff;">4:�L�����N�^�[��\������</a></li>
+              <li><a href="android1.html">1:導入</a></li>
+              <li><a href="android2.html">2:新しいプロジェクトを作る</a></li>
+              <li><a href="android3.html">3:SurfaceViewをつかってみる</a></li>
+              <li><a href="android4.html" style="color: #0000ff;">4:キャラクターを表示する</a></li>
               <!--  
             <li><a href="index.html">MENU1</a></li>
             <li><a href="index.html">MENU2</a></li>
@@ -325,7 +325,7 @@ public class Character {
          </div><!-- /.section -->
          <!-- 
          <div class="section">
-            <h2>��̂���</h2>
+            <h2>趣味のこと</h2>
             <ul>
             <li><a href="index.html">MENU1</a></li>
             <li><a href="index.html">MENU2</a></li>
@@ -339,7 +339,7 @@ public class Character {
       </div><!-- /#sub -->
    </div><!-- /#contents -->
    <div id="pageTop">
-      <a href="#top">�y�[�W�̃g�b�v�֖߂�</a>
+      <a href="#top">ページのトップへ戻る</a>
    </div><!-- /#pageTop -->
    <div id="footer">
       <div class="copyright">Copyright &copy; 2018 IkeLog All Rights Reserved.</div>
