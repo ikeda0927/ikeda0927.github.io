@@ -161,6 +161,8 @@ public class BackGroundView extends SurfaceView implements SurfaceHolder.Callbac
            <br/><br/>
           コードの説明はコードの中にコメントとして書いたのでそれを読んでください。
            <br/><br/>
+          また、上で示したような形式の画像を予めdrawable-xxhdpiに入れて置いてください。
+           <br/><br/>
           色々いじってみると理解が深まると思います。
            <br/><br/>
           <code>
@@ -274,14 +276,47 @@ public class Character {
           <br/><br/>
           移動を実現する方法は色々考えられますが、今回はA*というアルゴリズムを使って実装してみます。
           <br/><br/>
-          A*を簡単に説明すると、
+          A*を簡単に説明すると、最短経路を効率的に求めるアルゴリズムです。
           <br/><br/>
+          詳しくは参考文献を見てください。
           <br/><br/>
+          それでは、そのアルゴリズムを実装します。
           <br/><br/>
+          と、言いたいところなのですが、そのアルゴリズムを実装するのに必要なクラスがあるのでまずはそれを作ります。
           <br/><br/>
+          以下にそのクラスを示します。
           <br/><br/>
+          <code>
+            <pre class="prettyprint linenums">package com.example.example.testapplication1;//ここは自分の環境に合わせてください
+
+public class Point {//キャラクターの座標に関するクラス
+    private float x;//x軸
+    private float y;//y軸
+    private int direction = 8;//これは後でキャラクターの向きを決めるのに使います
+    public Point(float x,float y){
+        this.x = x;
+        this.y = y;
+    }
+    public Point(float x,float y,int direction){
+        this.x = x;
+        this.y = y;
+        this.direction = direction;
+    }
+    public float getX() {
+        return x;
+    }
+    public float getY() {
+        return y;
+    }
+    public int getDirection(){
+        return direction;
+    }
+}
+</pre>
+          </code>
+          このクラスはキャラクターの座標に関するクラスです。
           <br/><br/>
-          
+         
           <h3>_</h3>
           <br/><br/><br/><br/><br/><br/>
           <h3>_</h3>
@@ -293,7 +328,14 @@ public class Character {
           </code>
         </p>
          <h2>最後に</h2>
-        <p><br/><br/><br/>
+        <p>
+          <br/><br/>
+          
+        </p>
+         <h2>参考文献</h2>
+        <p>
+          <br/>
+          <a href="https://algorithm.joho.info/machine-learning/a-star/">A*アルゴリズムの原理  |  アルゴリズム雑記</a>
         </p>
         <br/>
         <h6>作成日</h6>
