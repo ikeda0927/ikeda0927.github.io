@@ -36,9 +36,10 @@
          <li><a href="#heading1">はじめに</a></li>
          <li><a href="#heading2">キャラクターの種類について</a></li>
          <li><a href="#heading3">今回つくるキャラクターの画像について</a></li>
-         <li><a href="#heading4">キャラクター用のクラスを作成</a></li>
-         <li><a href="#heading5">キャラクターの移動</a></li>
-         <li><a href="#heading6">最後に</a></li>
+         <li><a href="#heading4">画面を分ける</a></li>
+         <li><a href="#heading5">キャラクター用のクラスを作成</a></li>
+         <li><a href="#heading6">キャラクターの移動</a></li>
+         <li><a href="#heading7">最後に</a></li>
        </ol>
      </div>
       <div id="main">
@@ -87,13 +88,186 @@
            <br/><br/>
            <a href="https://lh3.googleusercontent.com/70IZfPD7zAfWySq-eMRpFeQjGoitk-DwXE2uTzN_yoroLFoAfx33RWBm8RuUYM5nhELsJdWDb88TI-oJpXdK_7ZeEBnHpKXvuhl8VqsmdPOcNvx0Vv-ruL7ZsxdkcsbGdj81WddcJQ=s1024-no"><img src="https://lh3.googleusercontent.com/70IZfPD7zAfWySq-eMRpFeQjGoitk-DwXE2uTzN_yoroLFoAfx33RWBm8RuUYM5nhELsJdWDb88TI-oJpXdK_7ZeEBnHpKXvuhl8VqsmdPOcNvx0Vv-ruL7ZsxdkcsbGdj81WddcJQ=d"></a>
          </p>
-         <h2 id="heading4">キャラクター用のクラスを作成</h2>
+         <h2 id="heading4">画面を分ける</h2>
          <p><br/>
-           それでは早速キャラクター用のクラスを作りたいのですが、2種類のキャラクター(プレイヤーが操作できるキャラクターと操作できないキャラクター)があり、その2種類を同じクラスには書きたくありません。
+           <!--それでは早速キャラクター用のクラスを作りたいのですが、2種類のキャラクター(プレイヤーが操作できるキャラクターと操作できないキャラクター)があり、その2種類を同じクラスには書きたくありません。
            <br/><br/>
            ですが、2種類のキャラクターには共通点があります。(同じ形式の画像を読み込んだり、画面に表示したり)
            <br/><br/>
            なので、キャラクターの共通部分を抽象クラスとしようと思います。
+           <br/><br/>-->
+           取敢えずは主人公ではないキャラクター(プレイヤーが操作しないキャラクター)を表示するクラスを作ってみたいのですが、キャラクターを表示するためには表示する場所を指定する必要があります。
+           <br/><br/>
+           なので、画面を下の図のように分けてみたいと思います。
+           <br/><br/>
+           <a href="https://lh3.googleusercontent.com/UNj04frqULW0oIOgZxryOIcHJka7VirmzUj27ZxcTPT5hKdQrJ3u5n_4KtttYIR2u2oVaYBFi3V3l9CPlCJc18PW6zwjxsRv5y8NOP08lApywUMwtF67bUeOr0-P5wy_N9sZ2FT9cg=w800-h1200-no"><img src="https://lh3.googleusercontent.com/UNj04frqULW0oIOgZxryOIcHJka7VirmzUj27ZxcTPT5hKdQrJ3u5n_4KtttYIR2u2oVaYBFi3V3l9CPlCJc18PW6zwjxsRv5y8NOP08lApywUMwtF67bUeOr0-P5wy_N9sZ2FT9cg=d"></a>
+           <br/><br/>
+           端末の画面を縦に12個、横に8個に分けています。(数字には特に意味はないのでお好みでどうぞ)
+           <br/><br/>
+           ここでは、画面を複数の四角形が構成していると考えて、その四角形の縦の大きさをH_unit、横の大きさをW_unitとしています。
+           <br/><br/>
+           H_unit,W_unitいくつ分かで位置をあらわせます。
+           <br/><br/>
+           それでは前回の背景を表示するクラスにちょっと付け足して、分けたいと思います。
+           <br/><br/>
+           前回のプログラムに以下のように追加してください。
+           <br/><br/>
+           <code>
+             <pre class="prettyprint linenums">//省略
+public class BackGroundView extends SurfaceView implements SurfaceHolder.Callback {
+
+    private static final int DRAW_INTERVAL = 1;
+    private static float W_unit = 0f;//追加
+    private static float H_unit = 0f;//追加
+
+    public BackGroundView(Context context) {
+        super(context);
+        getHolder().addCallback(this);
+    }
+    public staitc float getW_unit(){//追加(他のクラスでW_unitの値を使うとき用)
+        return W_unit;
+    }
+    public static float getH_unit(){//追加(他のクラスでH_unitの値を使うとき用)
+        return H_unit;
+    }
+
+    private DrawThread drawThread;
+//省略</pre>
+           </code>
+           <code>
+             <pre class="prettyprint linenums">省略
+    public void drawBackGround(Canvas canvas){
+        canvas.drawColor(Color.LTGRAY);
+
+        Paint paint = new Paint();
+        Bitmap bg = BitmapFactory.decodeResource(getResources(),R.drawable.pupupuland3);
+        RectF dstRect = new RectF(0,0,canvas.getWidth(),canvas.getHeight());
+        Rect srcRect = new Rect(0,0,bg.getWidth(),bg.getHeight());
+        canvas.drawBitmap(bg,srcRect,dstRect,paint);
+        if(W_unit == 0f){//追加
+            W_unit = canvas.getWidth()/8;//今回は画面の横を8つに分けるため、8で割っている
+            H_unit = canvas.getHeight()/12;//画面を縦に12個に分けるため
+        }
+
+    }
+省略</pre>
+           </code>
+           <br/><br/>
+           これでキャラクターの位置を設定することが出来るようになったので早速クラスを作ってキャラクターを表示しましょう。
+           <br/><br/>
+           </p>
+        <h2 id="heading5">キャラクター用のクラスを作成</h2>
+        <p>
+           <br/><br/>
+          コードの説明はコードの中にコメントとして書いたのでそれを読んでください。
+           <br/><br/>
+          色々いじってみると理解が深まると思います。
+           <br/><br/>
+          <code>
+             <pre class="prettyprint linenums">package com.example.example.testapplication1;//ここは自分の環境に合わせてください
+
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.RectF;
+
+import static com.example.example.testapplication1.BackGroundView.getH_unit;//ここも自分の環境に合わせてください
+import static com.example.example.testapplication1.BackGroundView.getW_unit;//ここも自分の環境に合わせてください
+
+public class Character {
+    public static Canvas canvas;//簡単にいうと画面のこと
+    private Bitmap bmp;//キャラクターの画像
+    private int characterWidth;//上のbmpの横幅ではなくキャラクターの横幅
+    private int characterHeight;//同様にbmpの縦幅ではなくキャラクターの縦幅
+    //以下はキャラクターを表示する際にbmpのなかのどこにどの向きのキャラクターがいるかを知るためのもの(public static になっているのは後ほど…)
+    public static Rect rect_front1;//正面
+    public static Rect rect_front2;
+    public static Rect rect_back1;//後ろ
+    public static Rect rect_back2;
+    public static Rect rect_ldf1;//左斜め前
+    public static Rect rect_ldf2;
+    public static Rect rect_rdf1;//右斜め前
+    public static Rect rect_rdf2;
+    public static Rect rect_left1;//左
+    public static Rect rect_left2;
+    public static Rect rect_right1;//右
+    public static Rect rect_right2;
+    public static Rect rect_ldb1;//左斜め後ろ
+    public static Rect rect_ldb2;
+    public static Rect rect_rdb1;//右斜め後ろ
+    public static Rect rect_rdb2;
+
+    private Rect srcRect;//canvasに表示する際に使うキャラクターのbmp内での位置(上で示したたくさんのRectのこと)
+    private RectF dstRect;//画面のどの位置に表示させるか
+
+    public Character(Canvas canvas, Bitmap bmp){
+        this.canvas=canvas;
+        this.bmp = bmp;
+        characterWidth= bmp.getWidth()/4;//これでcharacterWidthはbmp内のキャラクターの横幅を得た
+        characterHeight= bmp.getHeight()/4;//これでcharacterWidthはbmp内のキャラクターの縦幅を得た
+        //bmp内におけるキャラクターの位置を指定する
+        rect_front1 = new Rect(0,0,characterWidth,characterHeight);
+        rect_front2 = new Rect(characterWidth,0,characterWidth*2,characterHeight);
+        rect_back1 = new Rect(characterWidth*2,0,characterWidth*3,characterHeight);
+        rect_back2 = new Rect(characterWidth*3,0,characterWidth*4,characterHeight);
+        rect_ldf1 = new Rect(0,characterHeight,characterWidth,characterHeight*2);
+        rect_ldf2 = new Rect(characterWidth,characterHeight,characterWidth*2,characterHeight*2);
+        rect_rdf1 = new Rect(characterWidth*2,characterHeight,characterWidth*3,characterHeight*2);
+        rect_rdf2 = new Rect(characterWidth*3,characterHeight,characterWidth*4,characterHeight*2);
+        rect_left1 = new Rect(0,characterHeight*2,characterWidth,characterHeight*3);
+        rect_left2 = new Rect(characterWidth,characterHeight*2,characterWidth*2,characterHeight*3);
+        rect_right1 = new Rect(characterWidth*2,characterHeight*2,characterWidth*3,characterHeight*3);
+        rect_right2 = new Rect(characterWidth*3,characterHeight*2,characterWidth*4,characterHeight*3);
+        rect_ldb1 = new Rect(0,characterHeight*3,characterWidth,characterHeight*4);
+        rect_ldb2 = new Rect(characterWidth,characterHeight*3,characterWidth*2,characterHeight*4);
+        rect_rdb1 = new Rect(characterWidth*2,characterHeight*3,characterWidth*3,characterHeight*4);
+        rect_rdb2 = new Rect(characterWidth*3,characterHeight*3,characterWidth*4,characterHeight*4);
+
+        srcRect = rect_front1;//初期値として指定しておく。このプログラムではここを変えるキャラクターの向きが変わる。
+        dstRect = new RectF(getW_unit()*0,getH_unit()*0,getW_unit()*1,getH_unit()*1);//初期値として取敢えず左上に表示。数字の部分を変えると位置が変わる。
+    }
+    public void show(){
+        if(srcRect != null && dstRect != null){
+            canvas.drawBitmap(bmp,srcRect,dstRect,new Paint());//bmpのsrcRectにあたる部分をを画面内のdstRectの位置に表示する
+        }
+    }
+
+}
+</pre>
+           </code>
+           <br/><br/>
+          このクラスのインスタンスを作成して表示するという処理をBackgroundViewクラスのdrawBackgroundメソッド内に追加します。
+           <br/><br/>
+           <code>
+             <pre class="prettyprint linenums">省略
+    public void drawBackGround(Canvas canvas){
+        canvas.drawColor(Color.LTGRAY);
+
+        Paint paint = new Paint();
+        Bitmap bg = BitmapFactory.decodeResource(getResources(),R.drawable.pupupuland3);
+        RectF dstRect = new RectF(0,0,canvas.getWidth(),canvas.getHeight());
+        Rect srcRect = new Rect(0,0,bg.getWidth(),bg.getHeight());
+        canvas.drawBitmap(bg,srcRect,dstRect,paint);
+        if(W_unit == 0f){
+            W_unit = canvas.getWidth()/8;
+            H_unit = canvas.getHeight()/12;
+        }
+        //追加
+        Bitmap characterBG = BitmapFactory.decodeResource(getResources(),R.drawable.mc);//drawable-xxhdpiフォルダからキャラクターの画像を読み込む
+        Character character = new Character(canvas,characterBG);//Characterクラスのインスタンスを作成
+        character.show();//表示
+        //追加ここまで
+
+    }
+省略</pre>
+           </code>
+           <br/><br/>
+          この状態で実行すると画面の左上にキャラクターが表示されると思います。
+           <br/><br/>
+          Characterクラス内のキャラクターの位置を決める部分を変えれば位置や大きさも変えられるので色々やってみてください。
+           <br/><br/>
+           <br/><br/>
            <br/><br/>
            <br/><br/>
            <br/><br/>
