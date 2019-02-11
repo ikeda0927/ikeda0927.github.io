@@ -38,7 +38,7 @@
          <li><a href="#heading3">今回つくるキャラクターの画像について</a></li>
          <li><a href="#heading4">画面を分ける</a></li>
          <li><a href="#heading5">キャラクター用のクラスを作成</a></li>
-         <li><a href="#heading6">キャラクターの移動</a></li>
+         <li><a href="#heading6">キャラクターを移動させるための準備</a></li>
          <li><a href="#heading7">最後に</a></li>
        </ol>
      </div>
@@ -50,7 +50,7 @@
            <br/><br/>
            自分は背景だけのRPGを見たことがありません。
            <br/><br/>
-           なので、今回はキャラクターの表示(できたら移動まで)をやっていきたいと思います。
+           なので、今回はキャラクターの表示(と移動させるための準備まで)をやっていきたいと思います。
            <br/></p>
          <h2 id="heading2">キャラクターの種類について</h2>
          <p>
@@ -229,7 +229,7 @@ public class Character {
         srcRect = rect_front1;//初期値として指定しておく。このプログラムではここを変えるキャラクターの向きが変わる。
         dstRect = new RectF(getW_unit()*0,getH_unit()*0,getW_unit()*1,getH_unit()*1);//初期値として取敢えず左上に表示。数字の部分を変えると位置が変わる。
     }
-    public void show(){
+    public void drawCharacter(){
         if(srcRect != null && dstRect != null){
             canvas.drawBitmap(bmp,srcRect,dstRect,new Paint());//bmpのsrcRectにあたる部分をを画面内のdstRectの位置に表示する
         }
@@ -258,7 +258,7 @@ public class Character {
         //追加
         Bitmap characterBG = BitmapFactory.decodeResource(getResources(),R.drawable.mc);//drawable-xxhdpiフォルダからキャラクターの画像を読み込む
         Character character = new Character(canvas,characterBG);//Characterクラスのインスタンスを作成
-        character.show();//表示
+        character.drawCharacter();//表示
         //追加ここまで
 
     }
@@ -270,9 +270,13 @@ public class Character {
           Characterクラス内のキャラクターの位置を決める部分を変えれば位置や大きさも変えられるので色々やってみてください。
            <br/><br/>
          </p>
-         <h2>キャラクターの移動</h2>
+         <h2>キャラクターを移動させるための準備</h2>
         <p>
-          さっきまででキャラクター自体の表示は出来たので次は移動をさせてみましょう。
+          さっきまででキャラクター自体の表示は出来たので次回は移動させたいと思います。
+          <br/><br/>
+          ですがそのためには色々と準備が必要なので今のうちに準備をしておきます。
+          <br/><br/>
+          まずは移動のアルゴリズムについてです。
           <br/><br/>
           移動を実現する方法は色々考えられますが、今回はA*というアルゴリズムを使って実装してみます。
           <br/><br/>
@@ -314,9 +318,56 @@ public class Point {//キャラクターの座標に関するクラス
 }
 </pre>
           </code>
-          このクラスはキャラクターの座標に関するクラスです。
+          このクラスはキャラクターの座標に関するクラスで、キャラクターを表示させたり、移動でこれのリストを使ったりします。
           <br/><br/>
-         
+         また、もう一つ必要なクラスがあります。
+          <br/><br/>
+          それは、マップのための座標のクラスです。
+          <br/><br/>
+          マップには障害物とかを設定します。
+          <br/><br/>
+          以下にそのクラスを示します。
+          <br/><br/>
+          <code>
+            <pre class="prettyprint linenums">package com.example.example.testapplication1;//ここは自分の環境に合わせてください。
+
+public class CoordinateData {//マップ(背景)のための座標クラス
+    private int x;//x軸
+    private int y;//y軸
+    private boolean obstacle = false;//この座標に障害物があるかないか
+    public CoordinateData(int x, int y,boolean obstacle){
+        this.x = x;
+        this.y = y;
+        this.obstacle = obstacle;
+    }
+    public CoordinateData(int x, int y){
+        this.x = x;
+        this.y = y;
+    }
+
+    public int getX() {
+        return x;
+    }
+    public int getY() {
+        return y;
+    }
+    public boolean getObstacle(){
+        return obstacle;
+    }
+}</pre>
+          </code>
+          取敢えず準備はこれくらいにしておきます。
+          <br/><br/>
+          <h2>最後に</h2>
+        <p>
+          今回はキャラクターの表示に関するプログラムを作成しました。
+          <br/><br/>
+          ちょっと長くなってしまいましたが今回はここまでとさせて頂きます。
+          <br/><br/>
+          ではまた！
+        </p><!--
+          <br/><br/>
+          <br/><br/>
           <h3>_</h3>
           <br/><br/><br/><br/><br/><br/>
           <h3>_</h3>
@@ -327,11 +378,7 @@ public class Point {//キャラクターの座標に関するクラス
             <pre class="prettyprint linenums"></pre>
           </code>
         </p>
-         <h2>最後に</h2>
-        <p>
-          <br/><br/>
-          
-        </p>
+         --></p>
          <h2>参考文献</h2>
         <p>
           <br/>
@@ -339,10 +386,10 @@ public class Point {//キャラクターの座標に関するクラス
         </p>
         <br/>
         <h6>作成日</h6>
-        <p>//</p>
+        <p>2019/2/11</p>
         <br/>
-        <h6>更新日</h6>
-        <p>//</p>
+        <!--<h6>更新日</h6>
+        <p>//</p>--/>
       </div><!-- /#main -->
       <div id="sub">
          <div class="section">
