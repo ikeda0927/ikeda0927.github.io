@@ -34,12 +34,9 @@
      <div>
        <ol>
          <li><a href="#heading1">はじめに</a></li>
-         <li><a href="#heading2">キャラクターの種類について</a></li>
-         <li><a href="#heading3">今回つくるキャラクターの画像について</a></li>
-         <li><a href="#heading4">画面を分ける</a></li>
-         <li><a href="#heading5">キャラクター用のクラスを作成</a></li>
-         <li><a href="#heading6">キャラクターの移動</a></li>
-         <li><a href="#heading7">最後に</a></li>
+         <li><a href="#heading2">キャラクターの移動</a></li>
+         <li><a href="#heading3">BackgroundViewクラスでの変更点</a></li>
+         <li><a href="#heading4">最後に</a></li>
        </ol>
      </div>
       <div id="main">
@@ -146,7 +143,7 @@ public class Character {
         srcRect = rect_front1;//初期値として指定しておく。このプログラムではここを変えるキャラクターの向きが変わる。
         dstRect = new RectF(getW_unit()*0,getH_unit()*0,getW_unit()*1,getH_unit()*1);//初期値として取敢えず左上に表示。数字の部分を変えると位置が変わる。
         //追加(取敢えずマップの仮の座標データを作成する。)
-for(int i=0;i&lt;12;i++){//ここでの12はマップを縦に12個に区切ったことに由来
+        for(int i=0;i&lt;12;i++){//ここでの12はマップを縦に12個に区切ったことに由来
             for(int j=0;j&lt;8;j++){//ここでの8はマップを横に8個に区切ったことに由来
                 CoordinateData coordinateData;
                 if( 0&lt; i &amp;&amp; i &lt; 11 &amp;&amp; 0 &lt; j &amp;&amp; j &lt; 7){
@@ -517,6 +514,47 @@ class Node{//A*で使うノードです。
 }</pre>
            </code>
            Characterクラスの方はこんな感じで、searchPathメソッドでA*アルゴリズムの計算を行なっています。
+           <br/><br/>
+           コードの中に大体の説明を書きましたが、簡単にまとめると、
+           <br/><br/>
+           スタート地点のノード(今回の例では(0,0)で固定)からコストを計算し、比較しながら周りのノードをオープンにしたり、現在のノードをクローズにしたりし、
+           <br/><br/>
+           更にゴール地点(今回の例では(7,11)で固定)までの距離を元に最短経路を予想しながらノードの親子関係を作っていき、
+           <br/><br/>
+           ゴールにたどり着いたらそのノードの親を辿っていくことでスタート地点からゴール地点への最短ルートを得るという事を行なっています。
+           <br/><br/>
+           また、このプログラムでは障害物を以下の図のように配置しています。(大きな灰色の四角が障害物です。)
+           <br/><br/>
+           <a href="https://lh3.googleusercontent.com/DliFyJMB0YSaNr6Jr_JW9rrYAMOWeVBUEquYcS7_qzD55YWIo3BIrwCmgPIWNBagELX0tBh5DqxVvceUAtQaQY0c-AQ8eLMhyRuWkt_SMgeIMI_aEnGBSAYAtB2lZYAY6d-I8pP_Ng=w800-h1200-no"><img src="https://lh3.googleusercontent.com/DliFyJMB0YSaNr6Jr_JW9rrYAMOWeVBUEquYcS7_qzD55YWIo3BIrwCmgPIWNBagELX0tBh5DqxVvceUAtQaQY0c-AQ8eLMhyRuWkt_SMgeIMI_aEnGBSAYAtB2lZYAY6d-I8pP_Ng=d"></a>
+           <br/><br/>
+           以下の部分で障害物を作成しているので、coordinateDataListに加えるここら辺を変えると面白いかもしれません。
+           <code>
+             <pre class="prettyprint linenums">
+        for(int i=0;i&lt;12;i++){//ここでの12はマップを縦に12個に区切ったことに由来
+            for(int j=0;j&lt;8;j++){//ここでの8はマップを横に8個に区切ったことに由来
+                CoordinateData coordinateData;
+                if( 0&lt; i &amp;&amp; i &lt; 11 &amp;&amp; 0 &lt; j &amp;&amp; j &lt; 7){
+                    coordinateData = new CoordinateData(j,i,true);//マップの中心付近に障害物を配置
+                }else{
+                    coordinateData = new CoordinateData(j,i,false);//それ以外は通行可能
+                }
+                coordinateDataList.add(coordinateData);//作成したcoordinateDataをリストに加える
+            }
+        }</pre>
+           </code>
+           <br/><br/>
+           また、searchPathメソッドの先頭の以下の部分でスタート地点の座標とゴール地点の座標を決めているのでそこを変えて見るといいかもしれないです。
+           <code>
+             <pre class="prettyprint linenums">//ここでは、移動元の座標を(0,0)、移動先の座標を(7,11)としておく。
+        int startX = 0;
+        int startY = 0;
+        int destinationX = 7;
+        int destinationY = 11;</pre>
+           </code>
+           <br/><br/>
+           <br/><br/>
+           <br/><br/>
+           
          </p>
          <h2 id="heading3">BackgroundViewクラスでの変更点</h2>
          <p>
@@ -531,7 +569,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.view.MotionEvent;
+import android.view.MotionEvent;//追加
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -540,79 +578,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class BackGroundView extends SurfaceView implements SurfaceHolder.Callback {
 
     private static final int DRAW_INTERVAL = 1;
-    private static float W_unit = 0f;//横の一単位
-    private static float H_unit = 0f;//縦の一単位
-    private  Character character;//追加
-
-    public BackGroundView(Context context) {
-        super(context);
-        getHolder().addCallback(this);
-    }
-    public static float getW_unit(){
-        return W_unit;
-    }
-    public static float getH_unit(){
-        return H_unit;
-    }
-
-    private DrawThread drawThread;
-    private class DrawThread extends Thread{
-        private final AtomicBoolean isFinished = new AtomicBoolean();
-
-        public void finish(){
-            isFinished.set(true);
-        }
-        @Override
-        public void run(){
-            SurfaceHolder holder = getHolder();
-            while(!isFinished.get()){
-                if(holder.isCreating()){
-                    continue;
-                }
-                Canvas canvas = holder.lockCanvas();
-                if(canvas == null){
-                    continue;
-                }
-                drawBackGround(canvas);
-                holder.unlockCanvasAndPost(canvas);
-                synchronized (this){
-                    try {
-                        wait(DRAW_INTERVAL);
-                    }catch (InterruptedException e){
-                    }
-                }
-            }
-        }
-    }
-
-    public void startDrawThread(){
-        stopDrawThread();
-
-        drawThread = new DrawThread();
-        drawThread.start();
-    }
-    public boolean stopDrawThread(){
-        if(drawThread == null){
-            return false;
-        }
-        drawThread.finish();
-        drawThread = null;
-        return true;
-    }
-
-    @Override
-    public void surfaceCreated(SurfaceHolder holder) {
-        startDrawThread();
-    }
-
-    @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-    }
-
-    @Override
-    public void surfaceDestroyed(SurfaceHolder holder) {
-        stopDrawThread();
-    }
+    private static float W_unit = 0f;
+    private static float H_unit = 0f;
+    private Character character;//追加(ここで宣言しておく)
+    
+//省略
 
     public void drawBackGround(Canvas canvas){
         canvas.drawColor(Color.LTGRAY);
@@ -648,21 +618,31 @@ public class BackGroundView extends SurfaceView implements SurfaceHolder.Callbac
 </pre>
            </code>
            この状態で実行すると、キャラクターが左上から右下に移動するのが確認できます。
-         </p>
-         <h2 id="heading4">画面を分ける</h2>
-         <p>
-           </p>
-        <h2 id="heading5">キャラクター用のクラスを作成</h2>
-        <p>
+           <br/><br/>
+           最後の部分に追加した
+           <br/><br/>
            <code>
-             <pre class="prettyprint linenums"></pre>
+             <pre class="prettyprint linenums">@Override
+    public boolean onTouchEvent(MotionEvent event){
+        switch (event.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                character.searchPath();
+                break;
+        }
+        return true;
+    }</pre>
            </code>
-           
-        </p>
-         <h2>最後に</h2>
+           <br/><br/>
+           の部分で画面をタッチしたときの動作を記述しています。
+           <br/><br/>
+           これで、タッチしたときにcharacterオブジェクトのsearchPathメソッドが呼ばれるようになります。
+         </p>
+         
+         <h2 id="heading4">最後に</h2>
         <p>
+          今回のプログラムではプログラム内で作成した障害物と、プログラム内で直接指定したスタート地点とゴール地点でA*の動作確認を行ないました。
           <br/><br/>
-          
+          次回は、A*アルゴリズムでキャラクターを移動させる(２)で、タップしたところに移動させるという所をやっていきたいと思います。
         </p>
          <h2>参考文献</h2>
         <p>
@@ -671,10 +651,11 @@ public class BackGroundView extends SurfaceView implements SurfaceHolder.Callbac
         </p>
         <br/>
         <h6>作成日</h6>
-        <p>//</p>
+        <p>2019/2/27</p>
         <br/>
+        <!--
         <h6>更新日</h6>
-        <p>//</p>
+        <p>//</p>-->
       </div><!-- /#main -->
       <div id="sub">
          <div class="section">
@@ -683,7 +664,8 @@ public class BackGroundView extends SurfaceView implements SurfaceHolder.Callbac
               <li><a href="android1.html">1:導入</a></li>
               <li><a href="android2.html">2:新しいプロジェクトを作る</a></li>
               <li><a href="android3.html">3:SurfaceViewをつかってみる</a></li>
-              <li><a href="android4.html" style="color: #0000ff;">4:キャラクターを表示する</a></li>
+              <li><a href="android4.html">4:キャラクターを表示する</a></li>
+              <li><a href="android5.html" style="color: #0000ff;">5:A*アルゴリズムでキャラクターを移動させる(1)</a></li>
               <!--  
             <li><a href="index.html">MENU1</a></li>
             <li><a href="index.html">MENU2</a></li>
