@@ -642,6 +642,18 @@ public class BackGroundView extends SurfaceView implements SurfaceHolder.Callbac
         <p>
           今回のプログラムではプログラム内で作成した障害物と、プログラム内で直接指定したスタート地点とゴール地点でA*の動作確認を行ないました。
           <br/><br/>
+          ちなみに、キャラクターを移動させた後、コンソールを見ると以下の図のような出力結果が得られると思います。
+          <br/><br/>
+          <a href="https://lh3.googleusercontent.com/7RpQZEQRZ7ixCoOlG37kXnfa_wZr6kjOcWCvdRhuZTpdZGfqZ4VI0ua5K3Ia7mSrIyybkuvMm87GcXKIcvwjJeOoPHngaSfmc2O6SVsAPAN1BVTipVLM6_3toWvRKZSNV6MK7Ik5fQ=w706-h1188-no"><img src="https://lh3.googleusercontent.com/7RpQZEQRZ7ixCoOlG37kXnfa_wZr6kjOcWCvdRhuZTpdZGfqZ4VI0ua5K3Ia7mSrIyybkuvMm87GcXKIcvwjJeOoPHngaSfmc2O6SVsAPAN1BVTipVLM6_3toWvRKZSNV6MK7Ik5fQ=d"></a>
+          <br/><br/>
+          これは、各ノードのコストや状態を可視化したもので、eが推定コスト、aが実コスト、sがスコアで、CloseとOpen,Noneが状態を表しています。
+          <br/><br/>
+          この図を見ると、Close状態のノードがスタート地点(左上)から左端を通り、下から2番目のノードで右下のノードに移り、目的地(右下)へと続いていることが分かります。
+          <br/>
+          (ちなみに、目的地のノードはCloseではなくOpen状態になっていますが正常です。)
+          <br/><br/>
+          また、Close状態のノードは、スタート地点から右に伸びても居ますが、辿っていくと途中で途切れています。
+          <br/><br/>
           次回は、A*アルゴリズムでキャラクターを移動させる(２)で、タップしたところに移動させるという所をやっていきたいと思います。
         </p>
          <h2>参考文献</h2>
@@ -653,9 +665,8 @@ public class BackGroundView extends SurfaceView implements SurfaceHolder.Callbac
         <h6>作成日</h6>
         <p>2019/2/27</p>
         <br/>
-        <!--
         <h6>更新日</h6>
-        <p>//</p>-->
+        <p>2019/2/28</p>
       </div><!-- /#main -->
       <div id="sub">
          <div class="section">
