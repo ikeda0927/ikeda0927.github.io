@@ -7,15 +7,13 @@
 <meta http-equiv="imagetoolbar" content="no" />
 <meta name="description" content="" />
 <meta name="keywords" content="" />
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="css/common.css" type="text/css" />
-<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-<title>IkeLog</title>
+<title>約束の日をもう一度</title>
 </head>
 <body>
 <div id="top">
    <div id="header">
-      <h1><a href="index.html">IkeLog</a></h1>
+     <h1><a href="index.html">IkeLog</a>_<a href="yakusoku1.html">約束の日をもう一度</a></h1>
    </div><!-- /#header -->
    <div id="menu">
       <ul>
@@ -30,65 +28,269 @@
       </ul>
    </div><!-- /#menu -->
    <div id="contents">
+     <div id="subtitle">
+     <h3>ちょっとノーヒントでは難しいと思ったので攻略法を載せます。</h3>
+     </div>
       <div id="main">
-         <h2>このサイトについて</h2>
+         <h2>ヒント</h2>
          <p>
-          　ここには自分への備忘録や、誰かのためになるような技術的な何かを載せていけたらいいなと思っています。<br/>
-           また、もしかしたら全然関係ないような事柄についても載せてしまうかもしれませんが、興味が無ければ気にしないでください!<br/>時間が出来たときに書いていきたいと思います。
-         </p>
-        
-         
-         <h2>自己紹介</h2>
-         <p>
-            自分は2018年現在大学3年生です。<br/>
-           情報系のことを主に学んでます。<br/>
-           いろいろなことに挑戦してみたいです。<br/>
-           実は、Qiitaのアカウントを取得してそこに色々かいてみたいなと思ってますが、こっちのやり方のほうが比較的自由度が高いかなと思いこんな感じでやり始めました。
+           どうしても分からなくなった際は、
+           <br/><br>
+           上から順番にヒントを見ていただけるといいとおもいます。
+           <br/><br/><br/>
+           <input type="button" value="ヒント1" onclick="contentsManager('hint1',1)" id="hint1Show"/>
+           <div id="hint1" hidden="">
+           <h3>起きてすぐ</h3>
+           <p>
+             <br/>
+             画面左下の"LOG"と書いてあるところをタップしてください。
+             <br/><br/>
+             スクロールしてみると集合場所が書かれているのでその場所に行ってみてください！
+             <br/><br/>
+           <input type="button" value="隠す" onclick="contentsManager('hint1',0)"/>
+           </p>
+           </div>
+           <br/>
+           
+           <input type="button" value="ヒント2" onclick="contentsManager('hint2',1)" id="hint2Show"/>
+           <div id="hint2" hidden="">
+           <h3>しーちゃんの家から出られなくなったとき</h3>
+           <p>
+             <br/>
+             奧の部屋の机をタップ！
+             <br/><br/>
+           <input type="button" value="隠す" onclick="contentsManager('hint2',0)"/>
+           </p>
+           </div>
            <br/><br/>
-           ちなみに、僕のGitHubのページは<a href="https://github.com/ikeda0927/" target="_blank">https://github.com/ikeda0927/</a>です。
-         </p>
-         <h2>宣伝</h2>
-        <p>製作したアプリです。(12/20公開しました。)</p>
-        <a href="https://play.google.com/store/apps/details?id=com.kohei.ikegon.yakusokunohiwomouitido"><img src="images/ic_launcher.png"/></a><br/>
+           
+           <input type="button" value="ヒント3" onclick="contentsManager('hint3',1)" id="hint3Show"/>
+           <div id="hint3" hidden="">
+           <h3>しーちゃんの家で回想を見た後</h3>
+           <p>
+             <br/>
+             カフェに行ってみましょう。
+             <br/><br/>
+           <input type="button" value="隠す" onclick="contentsManager('hint3',0)"/>
+           </p>
+           </div><br/><br/>
+           
+           <input type="button" value="ヒント4" onclick="contentsManager('hint4',1)" id="hint4Show"/>
+           <div id="hint4" hidden="">
+           <h3>三月九日　しーちゃんのお母さん話した後</h3>
+           <p>
+             <br/>
+             公衆電話に入って見ましょう。
+             <br/><br/>
+           <input type="button" value="隠す" onclick="contentsManager('hint4',0)"/>
+           </p>
+           </div>
+           <br/><br/>
+           
+           <input type="button" value="ヒント5" onclick="contentsManager('hint5',1)" id="hint5Show"/>
+           <div id="hint5" hidden="">
+           <h3>公衆電話でしーちゃんを見た後</h3>
+           <p>
+             <br/>
+             カフェの右奧から2番目の席？のところに行ってみてください！
+             <br/><br/>
+           <input type="button" value="隠す" onclick="contentsManager('hint5',0)"/>
+           </p>
+           </div>
+           <br/><br/>
+           
+           <input type="button" value="ヒント6" onclick="contentsManager('hint6',1)" id="hint6Show"/>
+           <div id="hint6" hidden="">
+           <h3>カフェ付近でしーちゃんにメモを渡した後</h3>
+           <p>
+             <br/>
+             カフェの右奧から2番目の席？のところに戻って、
+             <br/><br/>
+             その後はしーちゃんの家に行ってください。
+             <br/><br/>
+             メモがどこかにあります。
+             <br/><br/>
+           <input type="button" value="隠す" onclick="contentsManager('hint6',0)"/>
+           </p>
+           </div>
+           <br/><br/>
+           
+           <input type="button" value="ヒント7" onclick="contentsManager('hint7',1)" id="hint7Show"/>
+           <div id="hint7" hidden="">
+           <h3>3月10日　目覚めた後</h3>
+           <p>
+             <br/>
+             森に行ってみると・・・
+             <br/><br/>
+           <input type="button" value="隠す" onclick="contentsManager('hint7',0)"/>
+           </p>
+           </div>
+           <br/><br/>
+           
+           <input type="button" value="ヒント8" onclick="contentsManager('hint8',1)" id="hint8Show"/>
+           <div id="hint8" hidden="">
+           <h3>イノシシと遭遇して、森に行けなくなった後</h3>
+           <p>
+             <br/>
+             池の近くの小屋が気になる・・・
+             <br/><br/>
+           <input type="button" value="隠す" onclick="contentsManager('hint8',0)"/>
+           </p>
+           </div>
+           <br/><br/>
+           
+           <input type="button" value="ヒント9" onclick="contentsManager('hint9',1)" id="hint9Show"/>
+           <div id="hint9" hidden="">
+           <h3>小屋の中で日記を見た後</h3>
+           <p>
+             <br/>
+             りょうに会った所に戻れるかもしれないので
+             <br/><br/>
+             公民館前に行ってみましょう。
+             <br/><br/>
+           <input type="button" value="隠す" onclick="contentsManager('hint9',0)"/>
+           </p>
+           </div>
+           <br/><br/>
+           
+           <input type="button" value="ヒント10" onclick="contentsManager('hint10',1)" id="hint10Show"/>
+           <div id="hint10" hidden="">
+           <h3>しーちゃんが崖から落ちた後</h3>
+           <p>
+             <br/>
+             一旦家に戻って寝ましょう。
+             <br/><br/>
+           <input type="button" value="隠す" onclick="contentsManager('hint10',0)"/>
+           </p>
+           </div>
+           <br/><br/>
+           
+           <input type="button" value="ヒント11" onclick="contentsManager('hint11',1)" id="hint11Show"/>
+           <div id="hint11" hidden="">
+           <h3>しーちゃんとの約束をし直したとき</h3>
+           <p>
+             <br/>
+             しーちゃんのお母さんの話を聞きに行きましょう。
+             <br/><br/>
+           <input type="button" value="隠す" onclick="contentsManager('hint11',0)"/>
+           </p>
+           </div>
+           <br/><br/>
+           
+           <input type="button" value="ヒント12" onclick="contentsManager('hint12',1)" id="hint12Show"/>
+           <div id="hint12" hidden="">
+           <h3>しーちゃんのお母さんの話を聞いた後</h3>
+           <p>
+             <br/>
+             一旦自宅に戻って寝ましょう。
+             <br/><br/>
+           <input type="button" value="隠す" onclick="contentsManager('hint12',0)"/>
+           </p>
+           </div>
+           <br/><br/>
+           
+           <input type="button" value="ヒント13" onclick="contentsManager('hint13',1)" id="hint13Show"/>
+           <div id="hint13" hidden="">
+           <h3>ゆう(主人公)が崖から落とされ自室で目覚めた後</h3>
+           <p>
+             <br/>
+             公民館付近に居る人に話しかけてみましょう。
+             <br/><br/>
+           <input type="button" value="隠す" onclick="contentsManager('hint13',0)"/>
+           </p>
+           </div>
+           <br/><br/>
+           
+           <input type="button" value="ヒント14" onclick="contentsManager('hint14',1)" id="hint14Show"/>
+           <div id="hint14" hidden="">
+           <h3>河童？に食べ物を要求された後</h3>
+           <p>
+             <br/>
+             公民館付近で探してみましょう。
+             <br/><br/>
+           <input type="button" value="隠す" onclick="contentsManager('hint14',0)"/>
+           </p>
+           </div>
+           <br/><br/>
+           
+           <input type="button" value="ヒント15" onclick="contentsManager('hint15',1)" id="hint15Show"/>
+           <div id="hint15" hidden="">
+           <h3>ボール捜しを頼まれたとき</h3>
+           <p>
+             <br/>
+             小屋の中にあるかも・・・。
+             <br/><br/>
+             ・・・いや、ないかも。
+             <br/><br/>
+           <input type="button" value="隠す" onclick="contentsManager('hint15',0)"/>
+           </p>
+           </div>
+           <br/><br/>
+           
+           <input type="button" value="ヒント16" onclick="contentsManager('hint16',1)" id="hint16Show"/>
+           <div id="hint16" hidden="">
+           <h3>子供の頃のゆうとりょうを帰らせた後</h3>
+           <p>
+             <br/>
+             池の奥という場所をさがしてみて！
+             <br/><br/>
+           <input type="button" value="隠す" onclick="contentsManager('hint16',0)"/>
+           </p>
+           </div>
+           <br/><br/>
+           
+           <input type="button" value="ヒント17" onclick="contentsManager('hint17',1)" id="hint17Show"/>
+           <div id="hint17" hidden="">
+           <h3>笛を探すとき</h3>
+           <p>
+             <br/>
+             笛に関する情報は町に居る人に聞きましょう。
+             <br/><br/>
+             聞いた情報を活かす場所は池の奧にあります。
+             <br/><br/>
+           <input type="button" value="隠す" onclick="contentsManager('hint17',0)"/>
+           </p>
+           </div>
+           <br/><br/>
+           
+           <input type="button" value="ヒント18" onclick="contentsManager('hint18',1)" id="hint18Show"/>
+           <div id="hint18" hidden="">
+           <h3>イノシシからの話を聞いた後</h3>
+           <p>
+             <br/>
+             一旦家に帰りましょう。
+             <br/><br/>
+           <input type="button" value="隠す" onclick="contentsManager('hint18',0)"/>
+           </p>
+           </div>
+           <br/><br/>
+           
+           <input type="button" value="ヒント19" onclick="contentsManager('hint19',1)" id="hint19Show"/>
+           <div id="hint19" hidden="">
+           <h3>しーちゃんがお弁当を作ってくれたことを知った後</h3>
+           <p>
+             <br/>
+             池の近くに行き、ベンチに座りましょう。
+             <br/><br/>
+           <input type="button" value="隠す" onclick="contentsManager('hint19',0)"/>
+           </p>
+           </div>
+           
+           </p>
         <br/>
-        
-<div id="comment">
-          <div id="disqus_thread"></div>
-<script>
-
-/**
-*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
-/*
-var disqus_config = function () {
-this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-};
-*/
-(function() { // DON'T EDIT BELOW THIS LINE
-var d = document, s = d.createElement('script');
-s.src = 'https://ikelog.disqus.com/embed.js';
-s.setAttribute('data-timestamp', +new Date());
-(d.head || d.body).appendChild(s);
-})();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-                         <script id="dsq-count-scr" src="//ikelog.disqus.com/count.js" async></script>   
-        </div>
         <h6>作成日</h6>
-        <p>2018/12/18</p>
-        <br/>
-        <h6>更新日</h6>
-        <p>2019/2/28</p>
+        <p>2019/3/14</p>
+        <br/><!-- <h6>更新日</h6>
+        <p>//</p> -->
       </div><!-- /#main -->
       <div id="sub">
          <div class="section">
-            <h2>技術系のこと</h2>
+            <h2>Android</h2>
             <ul>
-           
-            <li><a href="android1.html">Android</a></li>      
-            <li><a href="UnityMoveBox1.html">Unity</a></li>
+              <li><a href="yakusoku1.html" style="color: #0000ff;">1:約束の日をもう一度</a></li>
+              
               <!--  
+            <li><a href="index.html">MENU1</a></li>
             <li><a href="index.html">MENU2</a></li>
             <li><a href="index.html">MENU3</a></li>
             <li><a href="index.html">MENU4</a></li>
@@ -96,27 +298,43 @@ s.setAttribute('data-timestamp', +new Date());
             <li><a href="index.html">MENU6</a></li> -->
             </ul>
          </div><!-- /.section -->
+         <!-- 
          <div class="section">
             <h2>趣味のこと</h2>
             <ul>
-            
-            <li><a href="yakusoku1.html">約束の日をもう一度　ヒント</a></li>
-              <!-- <li><a href="index.html">MENU1</a></li>
+            <li><a href="index.html">MENU1</a></li>
             <li><a href="index.html">MENU2</a></li>
             <li><a href="index.html">MENU3</a></li>
             <li><a href="index.html">MENU4</a></li>
             <li><a href="index.html">MENU5</a></li>
-            <li><a href="index.html">MENU6</a></li> -->
+            <li><a href="index.html">MENU6</a></li> 
             </ul>
-         </div><!-- /.section -->
+         </div>
+        -->
       </div><!-- /#sub -->
    </div><!-- /#contents -->
    <div id="pageTop">
       <a href="#top">ページのトップへ戻る</a>
    </div><!-- /#pageTop -->
    <div id="footer">
-      <div class="copyright">Copyright &copy; 2018 IkeLog All Rights Reserved.</div>
+      <div class="copyright">Copyright &copy; 2019 IkeLog All Rights Reserved.</div>
    </div><!-- /#footer -->
 </div><!-- /#top -->
+  <script type="text/javascript" src="js/prettify.js"></script>
+  <script type="text/javascript" src="js/lang-css.js"></script>
+  <script>
+    function contentsManager(id,bool){
+      if(bool){
+        document.getElementById(id).removeAttribute("hidden");
+        document.getElementById(id+"Show").setAttribute("hidden","");
+      }else if(bool == 0){
+        document.getElementById(id).setAttribute("hidden","");
+        document.getElementById(id+"Show").removeAttribute("hidden","");
+      }
+    }
+  </script>
+  <script>
+  prettyPrint();
+  </script>
 </body>
 </html>
