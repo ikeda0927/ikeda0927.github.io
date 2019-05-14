@@ -1,0 +1,717 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<meta http-equiv="imagetoolbar" content="no" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<link rel="stylesheet" href="css/common.css" type="text/css" />
+<title>A*アルゴリズムでキャラクターを移動させる(1)-androidで簡単なRPGを作ってみる</title>
+</head>
+<body>
+<div id="top">
+   <div id="header">
+     <h1><a href="index.html">IkeLog</a>_<a href="">android</a>(5)</h1>
+   </div><!-- /#header -->
+   <div id="menu">
+      <ul>
+      
+        <!--//タブを作る
+      <li><a href="index.html">MENU1</a></li>
+      <li><a href="index.html">MENU2</a></li>
+      <li><a href="index.html">MENU3</a></li>
+      <li><a href="index.html">MENU4</a></li>
+      <li><a href="index.html">MENU5</a></li>
+      <li><a href="index.html">MENU6</a></li>-->
+      </ul>
+   </div><!-- /#menu -->
+   <div id="contents">
+     <div id="subtitle">
+     <h3>A*アルゴリズムでキャラクターを移動させる(1)</h3>
+     </div>
+     <div>
+       <ol>
+         <li><a href="#heading1">はじめに</a></li>
+         <li><a href="#heading2">キャラクターの移動</a></li>
+         <li><a href="#heading3">BackgroundViewクラスでの変更点</a></li>
+         <li><a href="#heading4">最後に</a></li>
+       </ol>
+     </div>
+      <div id="main">
+         <h2 id="heading1">はじめに</h2>
+         <p>
+           <br/>
+           前回までで、キャラクターを画面の左上に表示するという所までできました。
+           <br/><br/>
+           そして、ちょっとだけキャラクターを移動させるための準備を行ないました。
+           <br/><br/>
+           なので、今回はその続きでA*アルゴリズムを用いたキャラクターの移動を行ないます。
+           <br/><br/>
+           ちなみに、予め言っておきますが、今回はA*アルゴリズムでキャラクターが障害物を避けながら目的地に向かっているなというのが最低限確認出来る程度です。(時間等の都合上・・・)
+           <br/></p>
+         <h2 id="heading2">キャラクターの移動</h2>
+         <p>
+           <br/>
+           早速ですが、前回までに作成したCharacterクラスを以下のように変えてください。
+           <br/><br/>
+           <code>
+             <pre class="prettyprint linenums">package com.example.example.testapplication1;
+
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.RectF;
+import android.util.Log;//追加(Logcatにログを出力するため)
+
+import java.util.ArrayList;//追加(リストを使うため)
+import java.util.ConcurrentModificationException;//追加例外処理で必要
+import java.util.Iterator;
+import java.util.List;
+
+import static com.example.example.testapplication1.BackGroundView.getH_unit;
+import static com.example.example.testapplication1.BackGroundView.getW_unit;
+
+public class Character {
+    public static Canvas canvas;//簡単にいうと画面のこと
+    private Bitmap bmp;//キャラクターの画像
+    private int characterWidth;//上のbmpの横幅ではなくキャラクターの横幅
+    private int characterHeight;//同様にbmpの縦幅ではなくキャラクターの縦幅
+    //以下はキャラクターを表示する際にbmpのなかのどこにどの向きのキャラクターがいるかを知るためのもの(public static になっているのは後ほど…)
+    public static Rect rect_front1;//正面
+    public static Rect rect_front2;
+    public static Rect rect_back1;//後ろ
+    public static Rect rect_back2;
+    public static Rect rect_ldf1;//左斜め前
+    public static Rect rect_ldf2;
+    public static Rect rect_rdf1;//右斜め前
+    public static Rect rect_rdf2;
+    public static Rect rect_left1;//左
+    public static Rect rect_left2;
+    public static Rect rect_right1;//右
+    public static Rect rect_right2;
+    public static Rect rect_ldb1;//左斜め後ろ
+    public static Rect rect_ldb2;
+    public static Rect rect_rdb1;//右斜め後ろ
+    public static Rect rect_rdb2;
+
+    private Rect srcRect;//canvasに表示する際に使うキャラクターのbmp内での位置(上で示したたくさんのRectのこと)
+    private RectF dstRect;//画面のどの位置に表示させるか
+
+    private List&lt;Point&gt; path = new ArrayList&lt;&gt;();//得られた道
+    private Node goalNode;
+    private Point prePoint = new Point(0,0);//初期値は画面の左上
+    private static float nowX = 0;
+    private static float nowY = 0;
+
+    //追加
+    private List&lt;CoordinateData&gt; coordinateDataList = new ArrayList&lt;&gt;();//マップの仮の座標データ
+    private List&lt;Node&gt; nodeList = new ArrayList&lt;&gt;();//ノードのリスト
+    private List&lt;Node&gt; openList = new ArrayList&lt;&gt;();//オープン状態であるノードのリスト
+    private int baseNodeIndex=0;
+    private Node parent;//親ノード
+    private int activeX;//移動可能なノードを見つけるときにつかう。(良い感じの名前が無かったのでとりあえずactiveと付けて置いただけです。)
+    private int activeY;//上と同じ
+    private boolean judge = true;
+    //追加ここまで
+
+    public Character(Canvas canvas, Bitmap bmp){
+        this.canvas=canvas;
+        this.bmp = bmp;
+        characterWidth= bmp.getWidth()/4;//これでcharacterWidthはbmp内のキャラクターの横幅を得た
+        characterHeight= bmp.getHeight()/4;//これでcharacterWidthはbmp内のキャラクターの縦幅を得た
+        //bmp内におけるキャラクターの位置を指定する
+        rect_front1 = new Rect(0,0,characterWidth,characterHeight);
+        rect_front2 = new Rect(characterWidth,0,characterWidth*2,characterHeight);
+        rect_back1 = new Rect(characterWidth*2,0,characterWidth*3,characterHeight);
+        rect_back2 = new Rect(characterWidth*3,0,characterWidth*4,characterHeight);
+        rect_ldf1 = new Rect(0,characterHeight,characterWidth,characterHeight*2);
+        rect_ldf2 = new Rect(characterWidth,characterHeight,characterWidth*2,characterHeight*2);
+        rect_rdf1 = new Rect(characterWidth*2,characterHeight,characterWidth*3,characterHeight*2);
+        rect_rdf2 = new Rect(characterWidth*3,characterHeight,characterWidth*4,characterHeight*2);
+        rect_left1 = new Rect(0,characterHeight*2,characterWidth,characterHeight*3);
+        rect_left2 = new Rect(characterWidth,characterHeight*2,characterWidth*2,characterHeight*3);
+        rect_right1 = new Rect(characterWidth*2,characterHeight*2,characterWidth*3,characterHeight*3);
+        rect_right2 = new Rect(characterWidth*3,characterHeight*2,characterWidth*4,characterHeight*3);
+        rect_ldb1 = new Rect(0,characterHeight*3,characterWidth,characterHeight*4);
+        rect_ldb2 = new Rect(characterWidth,characterHeight*3,characterWidth*2,characterHeight*4);
+        rect_rdb1 = new Rect(characterWidth*2,characterHeight*3,characterWidth*3,characterHeight*4);
+        rect_rdb2 = new Rect(characterWidth*3,characterHeight*3,characterWidth*4,characterHeight*4);
+
+        srcRect = rect_front1;//初期値として指定しておく。このプログラムではここを変えるキャラクターの向きが変わる。
+        dstRect = new RectF(getW_unit()*0,getH_unit()*0,getW_unit()*1,getH_unit()*1);//初期値として取敢えず左上に表示。数字の部分を変えると位置が変わる。
+        //追加(取敢えずマップの仮の座標データを作成する。)
+        for(int i=0;i&lt;12;i++){//ここでの12はマップを縦に12個に区切ったことに由来
+            for(int j=0;j&lt;8;j++){//ここでの8はマップを横に8個に区切ったことに由来
+                CoordinateData coordinateData;
+                if( 0&lt; i &amp;&amp; i &lt; 11 &amp;&amp; 0 &lt; j &amp;&amp; j &lt; 7){
+                    coordinateData = new CoordinateData(j,i,true);//マップの中心付近に障害物を配置
+                }else{
+                    coordinateData = new CoordinateData(j,i,false);//それ以外は通行可能
+                }
+                coordinateDataList.add(coordinateData);//作成したcoordinateDataをリストに加える
+            }
+        }
+        //追加ここまで
+    }
+    public void drawCharacter(){
+        Point nowPoint;
+        if(path.isEmpty()){
+            nowPoint = prePoint;
+            goalNode = null;
+        }else{
+            nowPoint = path.remove(path.size()-1);
+        }
+        dstRect = new RectF(nowPoint.getX()*getW_unit(),nowPoint.getY()*getH_unit(),(nowPoint.getX()+1)*getW_unit(),(nowPoint.getY()+1)*getH_unit());
+
+        nowX = nowPoint.getX();
+        nowY = nowPoint.getY();
+
+        if (srcRect == null){
+            srcRect =rect_front1;
+        }
+        if(srcRect != null &amp;&amp; dstRect != null){
+            canvas.drawBitmap(bmp,srcRect,dstRect,new Paint());//bmpのsrcRectにあたる部分をを画面内のdstRectの位置に表示する
+        }
+
+    }
+    //追加
+    void searchPath(){
+        //ここでは、移動元の座標を(0,0)、移動先の座標を(7,11)としておく。
+        int startX = 0;
+        int startY = 0;
+        int destinationX = 7;
+        int destinationY = 11;
+
+        path = new ArrayList&lt;&gt;();
+        //まずノードリストにNONE状態のノードを入れておく。
+        if(nodeList.isEmpty()){
+            for(CoordinateData coordinateData : coordinateDataList){
+                //coordinateDataListをもとに、ノードリストに座標の情報を加えていく
+                nodeList.add(new Node(coordinateData.getX(),coordinateData.getY()));
+            }
+        }
+        //OPEN状態のノードのリストを空にしておく
+        openList.clear();
+        for(Node node : nodeList){
+            if(Integer.valueOf(startX).equals(Integer.valueOf(node.getX())) &amp;&amp; Integer.valueOf(startY).equals(Integer.valueOf(node.getY()))&amp;&amp; Integer.valueOf(node.getState()).equals(Integer.valueOf(Node.NONE))){
+                node.setState(Node.OPEN);
+                openList.add(node);
+                parent = node;
+                baseNodeIndex = nodeList.indexOf(node);
+                break;
+            }
+        }
+        activeX = startX;
+        activeY = startY;
+        while (judge){
+            if(checkMovable(activeX -1, activeY -1,coordinateDataList)){
+                int index = getIndexOfNodeList(activeX -1, activeY -1);
+                if(Integer.valueOf(nodeList.get(index).getState()).equals(Integer.valueOf(Node.NONE))){
+                    nodeList.get(index).setState(Node.OPEN);//ノードをOPEN状態にする。
+                    //スコアの計算を行なうと同時に現在の座標が目的地か否かの判定を行なう
+                    if(nodeList.get(index).calc(destinationX,destinationY,parent,true)){
+                        //現在の座標が目的地であった場合
+                        goalNode = nodeList.get(index);//現在のノードをgoalNodeとする。(親ノードを辿ることにより経路が得られる)
+                        judge = false;//ループを抜ける。
+                        nodeList.get(baseNodeIndex).setState(Node.CLOSE);//基準ノードをCLOSE状態にする
+                        continue;
+                    }
+                    //現在の座標が目的地では無かった場合はOPENリストに加える
+                    openList.add(nodeList.get(index));
+                }
+            }
+            if(checkMovable(activeX, activeY -1,coordinateDataList)){//上と同じようなことをしているので省略
+                int index = getIndexOfNodeList(activeX, activeY -1);
+                if(Integer.valueOf(nodeList.get(index).getState()).equals(Integer.valueOf(Node.NONE))){
+                    nodeList.get(index).setState(Node.OPEN);
+                    if(nodeList.get(index).calc(destinationX,destinationY,parent,false)){
+                        goalNode = nodeList.get(index);
+                        judge = false;
+                        nodeList.get(baseNodeIndex).setState(Node.CLOSE);
+                        continue;
+                    }
+                    openList.add(nodeList.get(index));
+                }
+            }
+            if(checkMovable(activeX +1, activeY -1,coordinateDataList)){//上と同じようなことをしているので省略
+                int index = getIndexOfNodeList(activeX +1, activeY -1);
+                if(Integer.valueOf(nodeList.get(index).getState()).equals(Integer.valueOf(Node.NONE))){
+                    nodeList.get(index).setState(Node.OPEN);
+                    if(nodeList.get(index).calc(destinationX,destinationY,parent,true)){
+                        goalNode = nodeList.get(index);
+                        judge = false;
+                        nodeList.get(baseNodeIndex).setState(Node.CLOSE);
+                        continue;
+                    }
+                    openList.add(nodeList.get(index));
+                }
+            }
+            if(checkMovable(activeX +1, activeY,coordinateDataList)){//上と同じようなことをしているので省略
+                int index = getIndexOfNodeList(activeX +1, activeY);
+                if(Integer.valueOf(nodeList.get(index).getState()).equals(Integer.valueOf(Node.NONE))){
+                    nodeList.get(index).setState(Node.OPEN);
+                    if(nodeList.get(index).calc(destinationX,destinationY,parent,false)){
+                        goalNode = nodeList.get(index);
+                        judge = false;
+                        nodeList.get(baseNodeIndex).setState(Node.CLOSE);
+                        continue;
+                    }
+                    openList.add(nodeList.get(index));
+                }
+            }
+            if(checkMovable(activeX +1, activeY +1,coordinateDataList)){//上と同じようなことをしているので省略
+                int index = getIndexOfNodeList(activeX +1, activeY +1);
+                if(Integer.valueOf(nodeList.get(index).getState()).equals(Integer.valueOf(Node.NONE)) ){
+                    nodeList.get(index).setState(Node.OPEN);
+                    if(nodeList.get(index).calc(destinationX,destinationY,parent,true)){
+                        goalNode = nodeList.get(index);
+                        judge = false;
+                        nodeList.get(baseNodeIndex).setState(Node.CLOSE);
+                        continue;
+                    }
+                    openList.add(nodeList.get(index));
+                }
+            }
+            if(checkMovable(activeX, activeY +1,coordinateDataList)){//上と同じようなことをしているので省略
+                int index = getIndexOfNodeList(activeX, activeY +1);
+                if(Integer.valueOf(nodeList.get(index).getState()).equals(Integer.valueOf(Node.NONE))){
+                    nodeList.get(index).setState(Node.OPEN);
+                    if(nodeList.get(index).calc(destinationX,destinationY,parent,false)){
+                        goalNode = nodeList.get(index);
+                        judge = false;
+                        nodeList.get(baseNodeIndex).setState(Node.CLOSE);
+                        continue;
+                    }
+                    openList.add(nodeList.get(index));
+                }
+            }
+            if(checkMovable(activeX -1, activeY +1,coordinateDataList)){//上と同じようなことをしているので省略
+                int index = getIndexOfNodeList(activeX -1, activeY +1);
+                if(Integer.valueOf(nodeList.get(index).getState()).equals(Integer.valueOf(Node.NONE))){
+                    nodeList.get(index).setState(Node.OPEN);
+                    if(nodeList.get(index).calc(destinationX,destinationY,parent,true)){
+                        goalNode = nodeList.get(index);
+                        judge = false;
+                        nodeList.get(baseNodeIndex).setState(Node.CLOSE);
+                        continue;
+                    }
+                    openList.add(nodeList.get(index));
+                }
+            }
+            if(checkMovable(activeX -1, activeY,coordinateDataList)){//上と同じようなことをしているので省略
+                int index = getIndexOfNodeList(activeX -1, activeY);
+                if(Integer.valueOf(nodeList.get(index).getState()).equals(Integer.valueOf(Node.NONE))){
+                    nodeList.get(index).setState(Node.OPEN);
+                    if(nodeList.get(index).calc(destinationX,destinationY,parent,false)){
+                        goalNode = nodeList.get(index);
+                        judge = false;
+                        nodeList.get(baseNodeIndex).setState(Node.CLOSE);
+                        continue;
+                    }
+                    openList.add(nodeList.get(index));
+                }
+            }
+            //基準ノードをCLOSE状態にする
+            nodeList.get(baseNodeIndex).setState(Node.CLOSE);
+            //イテレータを用いて、OPENリストの中からCLOSE状態のノードを排除する
+            Iterator&lt;Node&gt; iterator = openList.iterator();
+            while(iterator.hasNext()){
+                int state = iterator.next().getState();
+                if(Integer.valueOf(state).equals(Integer.valueOf( Node.CLOSE))){
+                    iterator.remove();
+                }
+            }
+            //OPENリストが空の場合はループから抜け出す
+            if(openList.isEmpty()){
+                judge = false;
+                continue;
+            }
+            //基準ノードを決める
+            float score = openList.get(0).getScore();
+            baseNodeIndex = nodeList.indexOf(openList.get(0));
+            int esScore2 = openList.get(0).getEsCost2();//最短判定用
+            for(Node openNode:openList){//openリストのなかで、
+                if(openNode.getScore()&lt;score){//スコアがより小さいものを
+                    score = openNode.getScore();
+                    baseNodeIndex = nodeList.indexOf(openNode);//基準ノードとする。
+                }else if(Float.valueOf(openNode.getScore()).equals(Float.valueOf(score))){//スコアが同じものがあった場合は、
+                    if(openNode.getEsCost2()&lt;esScore2){//esCost2の方で最短か否かを判定し、
+                        score = openNode.getScore();
+                        baseNodeIndex = nodeList.indexOf(openNode);//基準ノードとする。
+                    }
+                }
+            }
+            parent = nodeList.get(baseNodeIndex);
+            activeX = nodeList.get(baseNodeIndex).getX();
+            activeY = nodeList.get(baseNodeIndex).getY();
+        }
+        judge = true;
+        try{
+            //goalNodeをgetPathメソッドで逆順に辿り、道順を得る。
+            goalNode.getPath(path);
+            //以下はコンソールに表示する用
+            Log.d("path", "-------------------------------------");
+            try{
+                for(Point point : path){
+                    System.out.println("path activeX:"+point.getX()+" activeY:"+point.getY());
+                    Log.d("path","path activeX:"+point.getX()+" activeY:"+point.getY());
+                }
+            }catch (ConcurrentModificationException e){
+                Log.e("path","ConcurrentModificationException Occurred at 471 in Character.java");
+            }
+            Log.d("path","*********************************** START("+String.valueOf(startX)+","+String.valueOf(startY)+") dest("+String.valueOf(destinationX)+","+String.valueOf(destinationY)+")");
+            String s0 = "*node*\n";
+            for(int i = 0;i&lt;13;i++){
+                s0 = s0+String.valueOf(i)+"\t";
+                String s1 = "\n"+"\t";
+                String s2 = "\n "+"\t";
+                String s3 = "\n "+"\t";
+                for(int k = 0;k&lt;8;k++){
+                    for(Node node : nodeList){
+                        if(Integer.valueOf(node.getX()).equals(k) &amp;&amp; Integer.valueOf(node.getY()).equals(i)){
+                            s0 += "  e:"+String.format("%4d",node.getEstimatedCost())+"\t";
+                            s1 += "  a:"+String.format("%4.1f",node.getTheActualCost())+"\t";
+                            s2 += "  s:"+String.format("%4.1f",node.getScore())+"\t";
+                            switch (node.getState()){
+                                case 0:
+                                    s3+="  None\t\t";
+                                    break;
+                                case 1:
+                                    s3+="  Open\t\t";
+                                    break;
+                                case 2:
+                                    s3+="  Close\t\t";
+                                    break;
+                            }
+                        }
+                    }
+                }
+                s0 = s0+s1+s2+s3+"\n";
+            }
+
+            Log.d("path",s0);
+            //Logcatを開き、タグ名"path"のみ表示にすると、ノードの様子が分かると思う
+        }catch (NullPointerException e){
+            Log.e("goalNode"," goalNode is null");
+        }
+        for(Node node : nodeList){
+            node.clear();
+        }
+    }
+    public int getIndexOfNodeList(int x,int y){//座標からノードのインデックスを得る
+        for(Node node : nodeList){
+            if(Integer.valueOf(node.getX()).equals(Integer.valueOf(x)) &amp;&amp; Integer.valueOf(node.getY()).equals(Integer.valueOf(y))){
+                return nodeList.indexOf(node);
+            }
+        }
+        return -1;
+    }
+    boolean checkMovable(int x, int y, List&lt;CoordinateData&gt; coordinateDataList){//移動可能かを判定
+        if(0 &lt;= x &amp;&amp; 0 &lt;= y &amp;&amp; x &lt;= 7 &amp;&amp;  y &lt;= 12){
+            for(CoordinateData coordinateData : coordinateDataList){
+                if(Integer.valueOf(coordinateData.getX()).equals(Integer.valueOf(x)) &amp;&amp; Integer.valueOf(coordinateData.getY()).equals(Integer.valueOf(y))){
+                    return !coordinateData.getObstacle();
+                }
+            }
+        }
+        return false;
+    }
+    //追加ここまで
+}
+class Node{//A*で使うノードです。
+    private int x;
+    private int y;
+    public static final int NONE = 0;
+    public static final int OPEN = 1;
+    public static final int CLOSE = 2;
+    private int state = NONE;
+    private int estimatedCost;//推定コスト(計算用)
+    private int esCost2;//推定コスト(最短経路判定用)
+    private float theActualCost = 0f;//実コスト
+    private float score;//スコア
+    private Node parent;//親ノード
+    public Node(int x, int y){
+        this.x = x;
+        this.y = y;
+        parent = null;
+        score = theActualCost + estimatedCost;//スコアは実コストと推定コストの和
+    }
+    public void clear(){
+        state = NONE;
+        estimatedCost =0;
+        esCost2 = 0;
+        theActualCost =0;
+        score = 0;
+        parent = null;
+    }
+    public float getTheActualCost(){
+        return theActualCost;
+    }
+    public int getAbsoluteValue(int src,int dest){//与えられた二つの値の絶対値を得る
+        int value = 0;
+        if((dest - src)&lt;0){
+            value = (dest - src)*-1;
+        }else{
+            value = dest - src;
+        }
+        return value;
+    }
+    public int getX(){
+        return x;
+    }
+    public int getY(){
+        return y;
+    }
+
+    public boolean calc(int destinationX,int destinationY, Node parent,boolean isDiagonal){//スコアの計算を行なう
+        this.parent = parent;
+        if(parent != null){
+            if(isDiagonal){
+                theActualCost = 1.5f+parent.getTheActualCost();//斜めでのコストを0.5大きくしてあまり斜めを選択しないようにする。
+            }else{
+                theActualCost = 1f+parent.getTheActualCost();//縦と横の移動ではコストが1
+            }
+        }
+        if(getAbsoluteValue(x,destinationX) &lt; getAbsoluteValue(y,destinationY)){
+            estimatedCost = getAbsoluteValue(y,destinationY);
+            esCost2 = getAbsoluteValue(x,destinationX);
+        }else{
+            estimatedCost = getAbsoluteValue(x,destinationX);
+            esCost2 = getAbsoluteValue(y,destinationY);
+        }
+        score = theActualCost+estimatedCost;
+        if(Integer.valueOf(x).equals(Integer.valueOf(destinationX)) &amp;&amp; Integer.valueOf(y).equals(Integer.valueOf(destinationY))){
+            return true;//現在の座標が目的地だったらtrueを返す
+        }else {
+            return false;//現在の座標が目的地では無かったらfalseを返す
+        }
+    }
+    public int getEsCost2(){
+        return esCost2;
+    }
+    public int getEstimatedCost(){
+        return estimatedCost;
+    }
+    public int getState(){
+        return state;
+    }
+    public float getScore(){
+        return score;
+    }
+    public void setState(int state){
+        this.state = state;
+    }
+
+    public void getPath(List&lt;Point&gt; pointList){//pointListに自身のx,y座標を追加していくことでゴールからスタート地点までの道を得る。
+        pointList.add(new Point(x, y));
+        if(parent != null){
+            parent.getPath(pointList);
+        }
+    }
+}</pre>
+           </code>
+           Characterクラスの方はこんな感じで、searchPathメソッドでA*アルゴリズムの計算を行なっています。
+           <br/><br/>
+           コードの中に大体の説明を書きましたが、簡単にまとめると、
+           <br/><br/>
+           スタート地点のノード(今回の例では(0,0)で固定)からコストを計算し、比較しながら周りのノードをオープンにしたり、現在のノードをクローズにしたりし、
+           <br/><br/>
+           更にゴール地点(今回の例では(7,11)で固定)までの距離を元に最短経路を予想しながらノードの親子関係を作っていき、
+           <br/><br/>
+           ゴールにたどり着いたらそのノードの親を辿っていくことでスタート地点からゴール地点への最短ルートを得るという事を行なっています。
+           <br/><br/>
+           また、このプログラムでは障害物を以下の図のように配置しています。(大きな灰色の四角が障害物です。)
+           <br/><br/>
+           <a href="https://lh3.googleusercontent.com/DliFyJMB0YSaNr6Jr_JW9rrYAMOWeVBUEquYcS7_qzD55YWIo3BIrwCmgPIWNBagELX0tBh5DqxVvceUAtQaQY0c-AQ8eLMhyRuWkt_SMgeIMI_aEnGBSAYAtB2lZYAY6d-I8pP_Ng=w800-h1200-no" target="_blank"><img src="https://lh3.googleusercontent.com/DliFyJMB0YSaNr6Jr_JW9rrYAMOWeVBUEquYcS7_qzD55YWIo3BIrwCmgPIWNBagELX0tBh5DqxVvceUAtQaQY0c-AQ8eLMhyRuWkt_SMgeIMI_aEnGBSAYAtB2lZYAY6d-I8pP_Ng=d"></a>
+           <br/><br/>
+           以下の部分で障害物を作成しているので、coordinateDataListに加えるここら辺を変えると面白いかもしれません。
+           <code>
+             <pre class="prettyprint linenums">
+        for(int i=0;i&lt;12;i++){//ここでの12はマップを縦に12個に区切ったことに由来
+            for(int j=0;j&lt;8;j++){//ここでの8はマップを横に8個に区切ったことに由来
+                CoordinateData coordinateData;
+                if( 0&lt; i &amp;&amp; i &lt; 11 &amp;&amp; 0 &lt; j &amp;&amp; j &lt; 7){
+                    coordinateData = new CoordinateData(j,i,true);//マップの中心付近に障害物を配置
+                }else{
+                    coordinateData = new CoordinateData(j,i,false);//それ以外は通行可能
+                }
+                coordinateDataList.add(coordinateData);//作成したcoordinateDataをリストに加える
+            }
+        }</pre>
+           </code>
+           <br/><br/>
+           また、searchPathメソッドの先頭の以下の部分でスタート地点の座標とゴール地点の座標を決めているのでそこを変えて見るといいかもしれないです。
+           <code>
+             <pre class="prettyprint linenums">//ここでは、移動元の座標を(0,0)、移動先の座標を(7,11)としておく。
+        int startX = 0;
+        int startY = 0;
+        int destinationX = 7;
+        int destinationY = 11;</pre>
+           </code>
+           <br/><br/>
+           <br/><br/>
+           <br/><br/>
+           
+         </p>
+         <h2 id="heading3">BackgroundViewクラスでの変更点</h2>
+         <p>
+           <code>
+             <pre class="prettyprint linenums">package com.example.example.testapplication1;
+
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.RectF;
+import android.view.MotionEvent;//追加
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
+
+import java.util.concurrent.atomic.AtomicBoolean;
+
+public class BackGroundView extends SurfaceView implements SurfaceHolder.Callback {
+
+    private static final int DRAW_INTERVAL = 1;
+    private static float W_unit = 0f;
+    private static float H_unit = 0f;
+    private Character character;//追加(ここで宣言しておく)
+    
+//省略
+
+    public void drawBackGround(Canvas canvas){
+        canvas.drawColor(Color.LTGRAY);
+
+        Paint paint = new Paint();
+        Bitmap bg = BitmapFactory.decodeResource(getResources(),R.drawable.pupupuland3);
+        RectF dstRect = new RectF(0,0,canvas.getWidth(),canvas.getHeight());
+        Rect srcRect = new Rect(0,0,bg.getWidth(),bg.getHeight());
+        canvas.drawBitmap(bg,srcRect,dstRect,paint);
+        if(W_unit == 0f){
+            W_unit = canvas.getWidth()/8;
+            H_unit = canvas.getHeight()/12;
+        }
+        if(character == null){//characterがNULLだったときのみ実行
+            Bitmap characterBG = BitmapFactory.decodeResource(getResources(),R.drawable.mc);//drawable-xxhdpiフォルダからキャラクターの画像を読み込む
+            //変更：Character character　= new Character(canvas,characterBG);↓
+            character = new Character(canvas,characterBG);//Characterクラスのインスタンスを作成
+        }
+        character.drawCharacter();//表示
+    }
+    //追加
+    @Override
+    public boolean onTouchEvent(MotionEvent event){
+        switch (event.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                character.searchPath();
+                break;
+        }
+        return true;
+    }
+    //追加ここまで
+}
+</pre>
+           </code>
+           この状態で実行すると、キャラクターが左上から右下に移動するのが確認できます。
+           <br/><br/>
+           最後の部分に追加した
+           <br/><br/>
+           <code>
+             <pre class="prettyprint linenums">@Override
+    public boolean onTouchEvent(MotionEvent event){
+        switch (event.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                character.searchPath();
+                break;
+        }
+        return true;
+    }</pre>
+           </code>
+           <br/><br/>
+           の部分で画面をタッチしたときの動作を記述しています。
+           <br/><br/>
+           これで、タッチしたときにcharacterオブジェクトのsearchPathメソッドが呼ばれるようになります。
+         </p>
+         
+         <h2 id="heading4">最後に</h2>
+        <p>
+          今回のプログラムではプログラム内で作成した障害物と、プログラム内で直接指定したスタート地点とゴール地点でA*の動作確認を行ないました。
+          <br/><br/>
+          ちなみに、キャラクターを移動させた後、コンソールを見ると以下の図のような出力結果が得られると思います。
+          <br/><br/>
+          <a href="https://lh3.googleusercontent.com/7RpQZEQRZ7ixCoOlG37kXnfa_wZr6kjOcWCvdRhuZTpdZGfqZ4VI0ua5K3Ia7mSrIyybkuvMm87GcXKIcvwjJeOoPHngaSfmc2O6SVsAPAN1BVTipVLM6_3toWvRKZSNV6MK7Ik5fQ=w706-h1188-no"  target="_blank"><img src="https://lh3.googleusercontent.com/7RpQZEQRZ7ixCoOlG37kXnfa_wZr6kjOcWCvdRhuZTpdZGfqZ4VI0ua5K3Ia7mSrIyybkuvMm87GcXKIcvwjJeOoPHngaSfmc2O6SVsAPAN1BVTipVLM6_3toWvRKZSNV6MK7Ik5fQ=d"></a>
+          <br/><br/>
+          これは、各ノードのコストや状態を可視化したもので、eが推定コスト、aが実コスト、sがスコアで、CloseとOpen,Noneが状態を表しています。
+          <br/><br/>
+          この図を見ると、Close状態のノードがスタート地点(左上)から左端を通り、下から2番目のノードで右下のノードに移り、目的地(右下)へと続いていることが分かります。
+          <br/>
+          (ちなみに、目的地のノードはCloseではなくOpen状態になっていますが正常です。)
+          <br/><br/>
+          また、Close状態のノードは、スタート地点から右に伸びても居ますが、辿っていくと途中で途切れています。
+          <br/><br/>
+          次回は、A*アルゴリズムでキャラクターを移動させる(２)で、タップしたところに移動させるという所をやっていきたいと思います。
+        </p>
+         <h2>参考文献</h2>
+        <p>
+          <br/>
+          <a href="https://algorithm.joho.info/machine-learning/a-star/">A*アルゴリズムの原理  |  アルゴリズム雑記</a>
+        </p>
+        <br/>
+        <h6>作成日</h6>
+        <p>2019/2/27</p>
+        <br/>
+        <h6>更新日</h6>
+        <p>2019/2/28</p>
+      </div><!-- /#main -->
+      <div id="sub">
+         <div class="section">
+            <h2>Android</h2>
+            <ul>
+              <li><a href="android1.html">1:導入</a></li>
+              <li><a href="android2.html">2:新しいプロジェクトを作る</a></li>
+              <li><a href="android3.html">3:SurfaceViewをつかってみる</a></li>
+              <li><a href="android4.html">4:キャラクターを表示する</a></li>
+              <li><a href="android5.html" style="color: #0000ff;">5:A*アルゴリズムでキャラクターを移動させる(1)</a></li>
+              <!--  
+            <li><a href="index.html">MENU1</a></li>
+            <li><a href="index.html">MENU2</a></li>
+            <li><a href="index.html">MENU3</a></li>
+            <li><a href="index.html">MENU4</a></li>
+            <li><a href="index.html">MENU5</a></li>
+            <li><a href="index.html">MENU6</a></li> -->
+            </ul>
+         </div><!-- /.section -->
+         <!-- 
+         <div class="section">
+            <h2>趣味のこと</h2>
+            <ul>
+            <li><a href="index.html">MENU1</a></li>
+            <li><a href="index.html">MENU2</a></li>
+            <li><a href="index.html">MENU3</a></li>
+            <li><a href="index.html">MENU4</a></li>
+            <li><a href="index.html">MENU5</a></li>
+            <li><a href="index.html">MENU6</a></li> 
+            </ul>
+         </div>
+        -->
+      </div><!-- /#sub -->
+   </div><!-- /#contents -->
+   <div id="pageTop">
+      <a href="#top">ページのトップへ戻る</a>
+   </div><!-- /#pageTop -->
+   <div id="footer">
+      <div class="copyright">Copyright &copy; 2018 IkeLog All Rights Reserved.</div>
+   </div><!-- /#footer -->
+</div><!-- /#top -->
+  <script type="text/javascript" src="js/prettify.js"></script>
+  <script type="text/javascript" src="js/lang-css.js"></script>
+  <script>
+  prettyPrint();
+  </script>
+</body>
+</html>

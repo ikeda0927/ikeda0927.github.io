@@ -8,12 +8,12 @@
 <meta name="description" content="" />
 <meta name="keywords" content="" />
 <link rel="stylesheet" href="css/common.css" type="text/css" />
-<title>UnityMoveBox-Unity</title>
+<title>UnityCoinGame-Unity</title>
 </head>
 <body>
 <div id="top">
    <div id="header">
-     <h1><a href="index.html">IkeLog</a>_<a href="">unity</a>(1)</h1>
+     <h1><a href="index.html">IkeLog</a>_<a href="">unity</a>(3)</h1>
    </div><!-- /#header -->
    <div id="menu">
       <ul>
@@ -29,7 +29,7 @@
    </div><!-- /#menu -->
    <div id="contents">
      <div id="subtitle">
-       <h3>Unityで何か作ってみた(作製中 2019／1／13)</h3>
+       <h3>Unityでゲームセンターとかにある紐を切って景品ゲットするゲームを作ってみた。<br/>(作製中 2019／3／7)</h3>
      </div>
      <div>
        <!--<ol>
@@ -42,43 +42,24 @@
       <div id="main">
          <h2>Unity</h2>
          <p>
-           <a href="https://www.ikegon.tk/UnityBlocks/index.html" target="_blank">ここ</a>から作ったGame?のページに行けます。(WebGL使用)
+           <a href="https://www.ikegon.tk/StringCutter/" target="_blank">ここ</a>から作った紐を切って景品ゲットするゲームのページに行けます。(WebGL使用)
            <br/><br/>
-           押して何かしらのアクションが得られるボタンは"Space","上矢印","下矢印”,"左矢印","右矢印”,"a","d","c"です。
-           <br/><br/>
-           "Space"キーを押すと押している間、箱がステージの中央付近から生成されます。
-           <br/><br/>
-           生成された箱(最初から存在しているものも含む)は壁や他の箱にぶつかると、一旦後退し、その後ランダムで進む方向を決めます。
-           <br/><br/>
-          下矢印(↓)を押すと後ろを向きます。
-           <br/><br/>
-           右矢印(→)を押すと右を向きます。
-           <br/><br/>
-           左矢印(←)を押すと左を向きます。
-           <br/><br/>
-           上矢印(↑)を押すと止まってしまった場合に動き出します。
-           <br/><br/>
-           "a"キーを押すとちょっと速度が上昇します。
-           <br/><br/>
-           "a"キーを続けて押すことでもっと速度が上昇します。
-           <br/><br/>
-           "c"キーを押すと速度が初期値に戻ります。
-           <br/><br/>
-           "d"キーを押すとDestroyモードに入ります。
-           <br/><br/>
-           Destroyモード時は箱が青くなります。
-           <br/><br/>
-           sample画像
-           <br/><br/>
-           <a href="https://lh3.googleusercontent.com/saiIwDF35RFNbh4fvJ98kEWRtpCvbEXGiGOKAbcpUukYdOvTD75BDrq8n9h8Lg5Fet4J0Uk18SsUTQRxPp8QSsW3mYTxlXPjIIytDweEuZn23DjaY6uCr2KF_RWy7FIqfwCo7CwMbQ=w2172-h1222-no"><img src="https://lh3.googleusercontent.com/saiIwDF35RFNbh4fvJ98kEWRtpCvbEXGiGOKAbcpUukYdOvTD75BDrq8n9h8Lg5Fet4J0Uk18SsUTQRxPp8QSsW3mYTxlXPjIIytDweEuZn23DjaY6uCr2KF_RWy7FIqfwCo7CwMbQ=d"></a>
-           <br/>
-           <a href="https://lh3.googleusercontent.com/cQkhjlkcjpy_iFBDfXG3LkZlmTSU3q4CpI8DGIgz6RYa5umGsGY_HOI2-j8ajv2OlOED7TMt6g8xBUS_kK2Jpd6tS-7JHXlwzUh4NEPZncrkASQWj1_df-QJBAGrYh2CpjcqtfGIVA=w2172-h1222-no"><img src="https://lh3.googleusercontent.com/cQkhjlkcjpy_iFBDfXG3LkZlmTSU3q4CpI8DGIgz6RYa5umGsGY_HOI2-j8ajv2OlOED7TMt6g8xBUS_kK2Jpd6tS-7JHXlwzUh4NEPZncrkASQWj1_df-QJBAGrYh2CpjcqtfGIVA=d"></a>
-           <br/><br/>
-         自分なりにこれの面白いなと思うところはというと、箱同士が物理法則では無く、まるで自分で考えて行動しているかのように振る舞っている所です。 
-           <br/><br/>
-           いつまでも見ていられる気がします。
-           <br/><br/>
-           次回は寿司に関するUnityの作品です。
+	<div>
+      <p>
+        紐を切って景品ゲットするゲームのシミュレーションです。
+        <br/><br/>
+        紐でつるされている景品が下に落下させるとクリアです。
+        <br/><br/>
+        カメラの視点は数字キーの"1","2","3","4"で変更できます。
+        <br/><br/>
+        初期状態のカメラは"1"を押したときのカメラと同じです。
+        <br/><br/>
+        押してもらうと分かるのですが、<br/><br/>カメラの視点は正面("1")と左("2")右("3")、カッター("4")となっており、<br/><br/>カッターに付随するカメラを除き、矢印キーを押すとカメラの視点が動きます。
+        <h2>動かし方</h2><br/>
+        カッターは一回目のスペースキーの長押しによって正面から見て右側に移動し、<br/><br/>二回目のスペースキーの長押しによって正面から見て置くに移動し、<br/><br/>三回目のスペースキーの押下によってカッターから刃が出て、<br/><br/>ひもがある場合は紐を切断します。
+        <br/><br/>
+      </p>
+    </div>
            <br/><br/>
            <!--  <br/><br/><br/></p>
          <h2>_</h2>
@@ -129,10 +110,10 @@
          <div class="section">
             <h2>Unity</h2>
             <ul>
-              <li><a href="UnityMoveBox1.html" style="color: #0000ff;">1:MoveBox</a></li>
+              <li><a href="UnityMoveBox1.html">1:MoveBox</a></li>
               <li><a href="UnitySushi1.html">2:Sushi</a></li>
               <li><a href="UnityCoinGame1.html">3:CoinGame</a></li>
-              <li><a href="UnityStringCutter1.html">4:StringCutter</a></li>
+              <li><a href="UnityStringCutter1.html" style="color: #0000ff;">4:StringCutter</a></li>
               <!--
             <li><a href="index.html">MENU1</a></li>
             <li><a href="index.html">MENU2</a></li>
