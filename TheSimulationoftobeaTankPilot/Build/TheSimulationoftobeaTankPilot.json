@@ -1,0 +1,13 @@
+{
+"companyName": "DefaultCompany",
+"productName": "Wakugumi Unity Project",
+"dataUrl": "TheSimulationoftobeaTankPilot.data.unityweb",
+"wasmCodeUrl": "TheSimulationoftobeaTankPilot.wasm.code.unityweb",
+"wasmFrameworkUrl": "TheSimulationoftobeaTankPilot.wasm.framework.unityweb",
+"TOTAL_MEMORY": 268435456,
+"graphicsAPI": ["WebGL 2.0", "WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"splashScreenStyle": "Dark",
+"backgroundColor": "#231F20",
+"cacheControl": {"default": "must-revalidate"}
+}
