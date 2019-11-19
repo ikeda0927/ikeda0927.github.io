@@ -1,0 +1,4 @@
+This is a Brave Rewards publisher verification file.
+
+Domain: ikegon.tk
+Token: 059fdaf7aa06c3cefeee59c1c44bd59777bbff4d2c17a027fd3d04d1d3be3057
